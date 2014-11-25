@@ -10,5 +10,6 @@ public class Main {
         System.out.println("dinmor er en pusher");
         //asdlkjsald
         //asdkjahsdkhsajkhd
+        //kagemand
     }
 }
