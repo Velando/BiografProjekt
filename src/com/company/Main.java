@@ -6,7 +6,8 @@ public class Main {
 
         System.out.println("lol");
         System.out.println("hehe");
-        System.out.println("yo");
+        System.out.println("Det er sejere at skrive det her");
+
         //asdkjahsdkhsajkhd
     }
 }
