@@ -9,13 +9,13 @@ public class DB {
     }
 
     public static String[] getReservations(){
-
-
+        String[] x = {"fish", "hi"};
+        return x;
     }
 
     public static String[] getFilms(){
-
-
+        String[] x = {"fish", "hi"};
+        return x;
     }
 
     public static void addReservations(String reservation){
@@ -28,6 +28,8 @@ public class DB {
     }
 
     public static Boolean[][] generateSal(int forestilling){
-
+        Boolean[][] y = {{true}};
+        return y;
     }
 }
+
