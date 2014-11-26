@@ -11,7 +11,7 @@ public class Ordere {
     // liste af alle forestillinger
     private ArrayList<String> forestillinger;
     // liste af tidspunkter til forestillinger som skal stemme overens med forstillingerne
-    private ArrayList<Integer> tidspunkterTilForestillinger;
+    private ArrayList<Double> tidspunkterTilForestillinger;
     // sal til den enkelte forestilling (husk om vi skal hente dem eller ikke)
     private Boolean[][] seats;
 
@@ -53,12 +53,12 @@ public class Ordere {
 
     private void makeTidspukterTilForestilinger(){
         // dummy tidspunkter
-        tidspunkterTilForestillinger = new ArrayList<Integer>();
+        tidspunkterTilForestillinger = new ArrayList<Double>();
 
-        tidspunkterTilForestillinger.add(0,1600);
-        tidspunkterTilForestillinger.add(1,1700);
-        tidspunkterTilForestillinger.add(2,1800);
-        tidspunkterTilForestillinger.add(3,1930);
+        tidspunkterTilForestillinger.add(0,1122014.1600);
+        tidspunkterTilForestillinger.add(1,1122014.1700);
+        tidspunkterTilForestillinger.add(2,1122014.1800);
+        tidspunkterTilForestillinger.add(3,1122014.1930);
     }
 
     private void makeSeats(){
@@ -87,7 +87,7 @@ public class Ordere {
     }
 
     // tidspunktet til en specifik forestilling
-    public int getTidspunktTilForestilling(int nr_forstil){
+    public double getTidspunktTilForestilling(int nr_forstil){
         return tidspunkterTilForestillinger.get(nr_forstil);
     }
 
