@@ -29,7 +29,7 @@ public class MySQL {
                 String email = rs.getString("film_id");
                 String name = rs.getString("navn");
                 // int id = rs.getInt("id");
-                System.out.println("Name: '" + name + "', Email: '" + email + "'"); // Display data
+                System.out.println("navn: '" + name + "', film_id '" + email + "'"); // Display data
             }
             rs.close(); // close query
             connection.close(); // close connection
