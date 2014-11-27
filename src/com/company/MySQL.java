@@ -2,6 +2,7 @@ package com.company;
 
 import java.sql.*; // Import required packages
 
+
 public class MySQL {
     // JDBC driver name and database URL
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -11,6 +12,7 @@ public class MySQL {
     // Database credentials
     static final String USER = "KageMand";
     static final String PASS = "kage100";
+
 
     public static void main(String[] args) {
         Connection connection = null;
@@ -37,4 +39,6 @@ public class MySQL {
             e.printStackTrace(); // handle errors
         }
     }
+
+
 }
