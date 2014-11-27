@@ -1,6 +1,8 @@
 package com.company;
 
 import java.sql.*; // Import required packages
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Sebastian on 26-11-2014.
@@ -20,7 +22,7 @@ public class DB {
     private Statement statement = null;
 
     public DB() {
-
+        super();
     }
 
     private void openConnection(){
@@ -48,27 +50,24 @@ public class DB {
 
     }
 
-    private void sqlCommand(String sqlCommand) {
+    public ArrayList<Integer> sqlCommandSelectFrom(String select,String from) {
+        ArrayList<Integer> listToBeReturned = null;
         try {
-            String sql = "SELECT * FROM film"; // NB: implicit semi-colon!
+            String sql = "SELECT " + select + " FROM " + from; // NB: implicit semi-colon!
             ResultSet rs = statement.executeQuery(sql); // *** EXECUTE QUERY! ***
             // STEP 5: Extract data from result set
             while (rs.next()) { // Retrieve data by column name
-                String email = rs.getString("film_id");
-                String name = rs.getString("navn");
-                // int id = rs.getInt("id");
-                System.out.println("navn: '" + name + "', film_id '" + email + "'"); // Display data
+                listToBeReturned.add(rs.getInt(select));
             }
             rs.close();// close query
         } catch (Exception e){
             e.printStackTrace(); // handle errors
         }
-    }
-    public static String[] getReservations(){
-
+        return listToBeReturned;
     }
 
-    public static String[] getFilms(){
+
+    public static ArrayList<String> getFilms(){
         String[] x = {"fish", "hi"};
         return x;
     }
@@ -82,8 +81,11 @@ public class DB {
     }
 
     public Boolean[][] generateSal(int forestilling){
+        openConnection();
         Boolean[][] y = {{true}};
         return y;
+
+        closeConnection();
     }
 }
 

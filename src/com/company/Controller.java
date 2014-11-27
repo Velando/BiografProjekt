@@ -11,6 +11,7 @@ public class Controller {
          //screen = new Screen();
         ordere = new Ordere();
         setupScreen();
+        tjekBillet();
     }
     private void setupScreen(){
         for(int i = 0; i < ordere.getFilmsLength(); i++){
@@ -26,6 +27,13 @@ public class Controller {
                 if(ordere.isThisSeatTaken(i,j) != null) System.out.print("X ");
                 else System.out.print(". ");
             }
+        }
+    }
+
+    private void tjekBillet(){
+        ordere.makeBillet();
+        for(int i = 0; i < ordere.billetList.size(); i++){
+        ordere.billetList.get(i);
         }
     }
 }
