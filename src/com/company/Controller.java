@@ -32,8 +32,8 @@ public class Controller {
 
     private void tjekBillet(){
         ordere.makeBillet();
-        //for(int i = 0; i < ordere.billetList.size(); i++){
-          //  ordere.billetList.get(i).printBillet();
-        //}
+        for(int i = 0; i < ordere.billetList.size(); i++){
+            ordere.billetList.get(i).printBillet();
+        }
     }
 }

@@ -45,10 +45,10 @@ public class Ordere {
         } catch(Exception e){
             e.printStackTrace();
         }
+        billetList = new ArrayList<Billet>();
         for(int i = 0; i< 4;i++) {
             Billet x = new Billet(fore_id.get(i), res_id.get(i), række.get(i), sæde.get(i));
-            x.printBillet();
-            //billetList.add(x);
+            billetList.add(x);
         }
 
 
