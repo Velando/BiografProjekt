@@ -18,8 +18,8 @@ public class DB {
     private final String PASS = "kage100";
 
     // The connection situation and the statement to send.
-    private Connection connection = null;
-    private Statement statement = null;
+    private Connection connection;
+    private Statement statement;
 
     public DB() {
         super();
@@ -31,7 +31,7 @@ public class DB {
             connection = DriverManager.getConnection(DB_URL, USER, PASS); // Open connection
             statement = connection.createStatement(); // Create statement
 
-            System.out.println("Connected");
+            // System.out.println("Connected");
 
         } catch (Exception e) {
             e.printStackTrace(); // handle errors
@@ -42,7 +42,7 @@ public class DB {
         try {
             connection.close(); // close connection
 
-            System.out.println("Connection closed");
+            //System.out.println("Connection closed");
 
         }catch (Exception e){
             e.printStackTrace(); // handle errors
@@ -51,25 +51,27 @@ public class DB {
     }
 
     public ArrayList<Integer> sqlCommandSelectFrom(String select,String from) {
-        ArrayList<Integer> listToBeReturned = null;
+        openConnection();
+        ArrayList<Integer> listToBeReturned = new ArrayList<Integer>();
+        System.out.println();
         try {
-            String sql = "SELECT " + select + " FROM " + from; // NB: implicit semi-colon!
+            String sql = "SELECT * FROM billet"; // NB: implicit semi-colon!
             ResultSet rs = statement.executeQuery(sql); // *** EXECUTE QUERY! ***
             // STEP 5: Extract data from result set
             while (rs.next()) { // Retrieve data by column name
                 listToBeReturned.add(rs.getInt(select));
             }
             rs.close();// close query
+
         } catch (Exception e){
             e.printStackTrace(); // handle errors
         }
+        closeConnection();
         return listToBeReturned;
     }
 
+    public void getFilms(){
 
-    public static ArrayList<String> getFilms(){
-        String[] x = {"fish", "hi"};
-        return x;
     }
 
     public void addReservations(String reservation){
@@ -80,12 +82,10 @@ public class DB {
 
     }
 
-    public Boolean[][] generateSal(int forestilling){
-        openConnection();
-        Boolean[][] y = {{true}};
-        return y;
+    public void generateSal(int forestilling){
 
-        closeConnection();
     }
+
+
 }
 

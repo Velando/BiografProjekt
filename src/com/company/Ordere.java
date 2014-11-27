@@ -23,6 +23,7 @@ public class Ordere {
     //the constructor
     public Ordere(){
         super();
+        db = new DB();
 
         // her skal vi hente dataen fra databasen og ligge den ind i de fields vi har i
         // denne klasse
@@ -33,15 +34,21 @@ public class Ordere {
     }
 
     public void makeBillet(){
-        billetList = null;
 
-        ArrayList<Integer> fore_id = db.sqlCommandSelectFrom("forstil_id","billet");
-        ArrayList<Integer> res_id = db.sqlCommandSelectFrom("res_id","billet");
+
+        ArrayList<Integer> fore_id = db.sqlCommandSelectFrom("forstil_id", "billet");
+        ArrayList<Integer> res_id = db.sqlCommandSelectFrom("res_id", "billet");
         ArrayList<Integer> række = db.sqlCommandSelectFrom("række", "billet");
-        ArrayList<Integer> sæde = db.sqlCommandSelectFrom("nr", "billet");
-
-        for(int i = 0; i< res_id.size();i++) {
-            billetList.add(new Billet(fore_id.get(i), res_id.get(i), række.get(i), sæde.get(i)));
+        ArrayList<Integer> sæde = db.sqlCommandSelectFrom("sæde_nr", "billet");
+        try {
+            Thread.sleep(100);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        for(int i = 0; i< 4;i++) {
+            Billet x = new Billet(fore_id.get(i), res_id.get(i), række.get(i), sæde.get(i));
+            x.printBillet();
+            //billetList.add(x);
         }
 
 

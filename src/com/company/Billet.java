@@ -14,5 +14,10 @@ public class Billet {
         this.sæde = sæde;
     }
 
-    public 
+    public void printBillet(){
+        System.out.println("fore_id = " + fore_id + ""
+            + "   res_id = " + res_id + "" +
+            "   række = " + række + "" +
+            "   sæde = " + sæde);
+    }
 }

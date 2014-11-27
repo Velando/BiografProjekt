@@ -10,7 +10,7 @@ public class Controller {
         super();
          //screen = new Screen();
         ordere = new Ordere();
-        setupScreen();
+        // setupScreen();
         tjekBillet();
     }
     private void setupScreen(){
@@ -32,8 +32,8 @@ public class Controller {
 
     private void tjekBillet(){
         ordere.makeBillet();
-        for(int i = 0; i < ordere.billetList.size(); i++){
-        ordere.billetList.get(i);
-        }
+        //for(int i = 0; i < ordere.billetList.size(); i++){
+          //  ordere.billetList.get(i).printBillet();
+        //}
     }
 }

@@ -22,12 +22,12 @@ public class MySQL {
 
             System.out.println("Connected");
 
-            String sql = "SELECT * FROM film"; // NB: implicit semi-colon!
+            String sql = "SELECT * FROM billet"; // NB: implicit semi-colon!
             ResultSet rs = statement.executeQuery(sql); // *** EXECUTE QUERY! ***
             // STEP 5: Extract data from result set
             while (rs.next()) { // Retrieve data by column name
-                String email = rs.getString("film_id");
-                String name = rs.getString("navn");
+                int email = rs.getInt("forstil_id");
+                int name = rs.getInt("række");
                 // int id = rs.getInt("id");
                 System.out.println("navn: '" + name + "', film_id '" + email + "'"); // Display data
             }
