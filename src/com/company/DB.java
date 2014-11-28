@@ -50,14 +50,15 @@ public class DB {
 
     }
 
-    public ArrayList<Integer> sqlCommandSelectFrom(String select,String from) {
+    public ArrayList<Integer> sqlCommandSelectFromGetInt(String select,String from) {
         openConnection();
         ArrayList<Integer> listToBeReturned = new ArrayList<Integer>();
-        System.out.println();
         try {
-            String sql = "SELECT * FROM billet"; // NB: implicit semi-colon!
-            ResultSet rs = statement.executeQuery(sql); // *** EXECUTE QUERY! ***
-            // STEP 5: Extract data from result set
+            String sql = "SELECT * FROM " + from;
+
+            ResultSet rs = statement.executeQuery(sql); // this line executes the query
+
+            // Extract data from result set
             while (rs.next()) { // Retrieve data by column name
                 listToBeReturned.add(rs.getInt(select));
             }
@@ -70,6 +71,26 @@ public class DB {
         return listToBeReturned;
     }
 
+    public ArrayList<String> sqlCommandSelectFromGetString(String select,String from) {
+        openConnection();
+        ArrayList<String> listToBeReturned = new ArrayList<String>();
+        try {
+            String sql = "SELECT * FROM " + from;
+
+            ResultSet rs = statement.executeQuery(sql); // this line executes the query
+
+            // Extract data from result set
+            while (rs.next()) { // Retrieve data by column name
+                listToBeReturned.add(rs.getString(select));
+            }
+            rs.close();// close query
+
+        } catch (Exception e){
+            e.printStackTrace(); // handle errors
+        }
+        closeConnection();
+        return listToBeReturned;
+    }
     public void getFilms(){
 
     }

@@ -35,20 +35,20 @@ public class Ordere {
     }
 
     public void makeBillet(){
+        ArrayList<Integer> fore_id = db.sqlCommandSelectFromGetInt("forstil_id", "billet");
+        ArrayList<Integer> res_id = db.sqlCommandSelectFromGetInt("res_id", "billet");
+        ArrayList<Integer> række = db.sqlCommandSelectFromGetInt("række", "billet");
+        ArrayList<Integer> sæde = db.sqlCommandSelectFromGetInt("sæde_nr", "billet");
 
 
-        ArrayList<Integer> fore_id = db.sqlCommandSelectFrom("forstil_id", "billet");
-        ArrayList<Integer> res_id = db.sqlCommandSelectFrom("res_id", "billet");
-        ArrayList<Integer> række = db.sqlCommandSelectFrom("række", "billet");
-        ArrayList<Integer> sæde = db.sqlCommandSelectFrom("sæde_nr", "billet");
-        try {
-            Thread.sleep(100);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
+        ArrayList<Integer> film_id_billet = db.sqlCommandSelectFromGetInt("film_id","forestilling");
+        ArrayList<Integer> film_id = db.sqlCommandSelectFromGetInt("film_id","film");
+        ArrayList<String> film = db.sqlCommandSelectFromGetString("navn","film");
+
         billetList = new ArrayList<Billet>();
         for(int i = 0; i< 4;i++) {
-            Billet x = new Billet(fore_id.get(i), res_id.get(i), række.get(i), sæde.get(i));
+            String film_navn = film.get(film_id_billet.get(i));
+            Billet x = new Billet(fore_id.get(i),film_navn, res_id.get(i), række.get(i), sæde.get(i));
             billetList.add(x);
         }
 
