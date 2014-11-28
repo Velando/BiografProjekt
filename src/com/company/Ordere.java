@@ -43,7 +43,6 @@ public class Ordere {
 
 
         ArrayList<Integer> film_id_billet = db.sqlCommandSelectFromGetInt("film_id","forestilling");
-        ArrayList<Integer> film_id = db.sqlCommandSelectFromGetInt("film_id","film");
         ArrayList<String> film = db.sqlCommandSelectFromGetString("navn","film");
 
         db.closeConnection();
