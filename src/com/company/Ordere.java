@@ -19,7 +19,7 @@ public class Ordere {
 
     private DB db;
 
-    public ArrayList<Billet> billetList;
+
 
     //the constructor
     public Ordere(){
@@ -34,7 +34,8 @@ public class Ordere {
         makeSeats();
     }
 
-    public void makeBillet(){
+    public ArrayList<Billet> makeBillet(){
+        db.openConnection();
         ArrayList<Integer> fore_id = db.sqlCommandSelectFromGetInt("forstil_id", "billet");
         ArrayList<Integer> res_id = db.sqlCommandSelectFromGetInt("res_id", "billet");
         ArrayList<Integer> række = db.sqlCommandSelectFromGetInt("række", "billet");
@@ -45,14 +46,22 @@ public class Ordere {
         ArrayList<Integer> film_id = db.sqlCommandSelectFromGetInt("film_id","film");
         ArrayList<String> film = db.sqlCommandSelectFromGetString("navn","film");
 
-        billetList = new ArrayList<Billet>();
-        for(int i = 0; i< 4;i++) {
+        db.closeConnection();
+
+        ArrayList<Billet> billetList = new ArrayList<Billet>();
+        for(int i = 0; i< fore_id.size();i++) {
             String film_navn = film.get(film_id_billet.get(i));
             Billet x = new Billet(fore_id.get(i),film_navn, res_id.get(i), række.get(i), sæde.get(i));
             billetList.add(x);
         }
+        return billetList;
+    }
 
-
+    public ArrayList<String> downloadFilms(){
+        db.openConnection();
+        ArrayList<String> filmName = db.sqlCommandSelectFromGetString("navn","film");
+        db.closeConnection();
+        return filmName;
     }
 
     private void makeFilms(){

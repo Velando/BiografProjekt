@@ -22,10 +22,9 @@ public class DB {
     private Statement statement;
 
     public DB() {
-        super();
     }
 
-    private void openConnection(){
+    public void openConnection(){
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver()); // Register driver
             connection = DriverManager.getConnection(DB_URL, USER, PASS); // Open connection
@@ -38,7 +37,7 @@ public class DB {
         }
     }
 
-    private void closeConnection(){
+    public void closeConnection(){
         try {
             connection.close(); // close connection
 
@@ -51,7 +50,6 @@ public class DB {
     }
 
     public ArrayList<Integer> sqlCommandSelectFromGetInt(String select,String from) {
-        openConnection();
         ArrayList<Integer> listToBeReturned = new ArrayList<Integer>();
         try {
             String sql = "SELECT * FROM " + from;
@@ -67,12 +65,10 @@ public class DB {
         } catch (Exception e){
             e.printStackTrace(); // handle errors
         }
-        closeConnection();
         return listToBeReturned;
     }
 
     public ArrayList<String> sqlCommandSelectFromGetString(String select,String from) {
-        openConnection();
         ArrayList<String> listToBeReturned = new ArrayList<String>();
         try {
             String sql = "SELECT * FROM " + from;
@@ -88,25 +84,7 @@ public class DB {
         } catch (Exception e){
             e.printStackTrace(); // handle errors
         }
-        closeConnection();
         return listToBeReturned;
     }
-    public void getFilms(){
-
-    }
-
-    public void addReservations(String reservation){
-
-    }
-
-    public void removeReservation(int res_id){
-
-    }
-
-    public void generateSal(int forestilling){
-
-    }
-
-
 }
 

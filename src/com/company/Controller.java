@@ -14,6 +14,7 @@ public class Controller {
         ordere = new Ordere();
         // setupScreen();
         tjekBillet();
+        //tjekFilmList();
     }
     private void setupScreen(){
         for(int i = 0; i < ordere.getFilmsLength(); i++){
@@ -33,9 +34,18 @@ public class Controller {
     }
 
     private void tjekBillet(){
-        ordere.makeBillet();
-        for(int i = 0; i < ordere.billetList.size(); i++){
-            ordere.billetList.get(i).printBillet();
+        ArrayList<Billet> x = ordere.makeBillet();
+        for(int i = 0; i < x.size(); i++){
+            x.get(i).printBillet();
+        }
+    }
+
+    private void tjekFilmList(){
+
+        ArrayList<String> x = ordere.downloadFilms();
+
+        for(int i = 0; i < x.size(); i++){
+           System.out.println(x.get(i));
         }
     }
 
