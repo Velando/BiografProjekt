@@ -68,6 +68,25 @@ public class DB {
         return listToBeReturned;
     }
 
+    public ArrayList<Integer> sqlCommandSelectFromGetInt(String select,String from,String where) {
+        ArrayList<Integer> listToBeReturned = new ArrayList<Integer>();
+        try {
+            String sql = "SELECT * FROM " + from + " WHERE (" + where + ")";
+
+            ResultSet rs = statement.executeQuery(sql); // this line executes the query
+
+            // Extract data from result set
+            while (rs.next()) { // Retrieve data by column name
+                listToBeReturned.add(rs.getInt(select));
+            }
+            rs.close();// close query
+
+        } catch (Exception e){
+            e.printStackTrace(); // handle errors
+        }
+        return listToBeReturned;
+    }
+
     public ArrayList<String> sqlCommandSelectFromGetString(String select,String from) {
         ArrayList<String> listToBeReturned = new ArrayList<String>();
         try {
@@ -86,5 +105,25 @@ public class DB {
         }
         return listToBeReturned;
     }
+
+    public ArrayList<String> sqlCommandSelectFromGetString(String select,String from, String where) {
+        ArrayList<String> listToBeReturned = new ArrayList<String>();
+        try {
+            String sql = "SELECT * FROM " + from + " WHERE (" + where + ")";
+
+            ResultSet rs = statement.executeQuery(sql); // this line executes the query
+
+            // Extract data from result set
+            while (rs.next()) { // Retrieve data by column name
+                listToBeReturned.add(rs.getString(select));
+            }
+            rs.close();// close query
+
+        } catch (Exception e){
+            e.printStackTrace(); // handle errors
+        }
+        return listToBeReturned;
+    }
+
 }
 

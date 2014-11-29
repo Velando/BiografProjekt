@@ -40,6 +40,12 @@ public class Controller {
         }
     }
 
+
+    // meningen med denn er at finde ud salen.
+    private void tjekSeats(int forestil_id){
+
+    }
+
     private void tjekFilmList(){
 
         ArrayList<String> x = ordere.downloadFilms();
@@ -48,6 +54,4 @@ public class Controller {
            System.out.println(x.get(i));
         }
     }
-
-
 }

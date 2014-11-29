@@ -113,6 +113,22 @@ public class Ordere {
         seats[9][9] = true;
     }
 
+    // virker ikke endnu har ikke en god ide.
+    private ArrayList<Boolean[]> getSæderTilForestilling(int forestil_nr){
+
+        ArrayList<Integer> række_list = db.sqlCommandSelectFromGetInt("række", "billet", "forstil_nr = " + forestil_nr);
+        ArrayList<Integer> sæde_list = db.sqlCommandSelectFromGetInt("sæde","billet","forstil_nr = " + forestil_nr);
+
+        ArrayList<Boolean[]> x = new ArrayList<Boolean[]>();
+
+        for (Integer i: række_list) {
+            række_list.get(i);
+
+        }
+
+        return x;
+    }
+
     // en specifik film
     public String getFilm(int nr_film){
         return films.get(nr_film);
