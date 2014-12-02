@@ -16,5 +16,12 @@ public class Sal {
         this.sæder = sæder;
     }
 
+    public void printSal(){
+        System.out.println("sal_nr = " + sal_nr + ""
+                + "   rækker = " +rækker + "" +
+                "   sæder = " + sæder );
+
+    }
+
 
 }

@@ -34,26 +34,29 @@ public class Ordere {
         makeSeats();
     }
 
-    public ArrayList<Billet> makeBillet(){
+    public ArrayList<ArrayList<Integer>> downloadBillet(){
         db.openConnection();
-        ArrayList<Integer> fore_id = db.sqlCommandSelectFromGetInt("forstil_id", "billet");
-        ArrayList<Integer> res_id = db.sqlCommandSelectFromGetInt("res_id", "billet");
-        ArrayList<Integer> række = db.sqlCommandSelectFromGetInt("række", "billet");
-        ArrayList<Integer> sæde = db.sqlCommandSelectFromGetInt("sæde_nr", "billet");
+        ArrayList<Integer> billet_nr = db.sqlCommandSelectFromGetInt("billet_nr", "Billet");
+        ArrayList<Integer> res_id = db.sqlCommandSelectFromGetInt("res_id", "Billet");
+        ArrayList<Integer> forestil_id = db.sqlCommandSelectFromGetInt("forestil_id", "Billet");
+        ArrayList<Integer> række = db.sqlCommandSelectFromGetInt("række", "Billet");
+        ArrayList<Integer> sæde = db.sqlCommandSelectFromGetInt("sæde_nr", "Billet");
 
 
-        ArrayList<Integer> film_id_billet = db.sqlCommandSelectFromGetInt("film_id","forestilling");
-        ArrayList<String> film = db.sqlCommandSelectFromGetString("navn","film");
 
         db.closeConnection();
+        ArrayList<ArrayList<Integer>> billetList = new ArrayList<ArrayList<Integer>>();
 
-        ArrayList<Billet> billetList = new ArrayList<Billet>();
-        for(int i = 0; i< fore_id.size();i++) {
-            String film_navn = film.get(film_id_billet.get(i));
-            Billet x = new Billet(fore_id.get(i),film_navn, res_id.get(i), række.get(i), sæde.get(i));
-            billetList.add(x);
-        }
+        billetList.add(billet_nr);
+        billetList.add(res_id);
+        billetList.add(forestil_id);
+        billetList.add(række);
+        billetList.add(sæde);
+
         return billetList;
+
+
+
     }
 
     public ArrayList<String> downloadFilms(){
@@ -171,6 +174,18 @@ public class Ordere {
     // salens sæder til en specifik forestilling.
     public Boolean isThisSeatTaken(int row, int seat){
         return seats[row][seat];
+    }
+
+    public ArrayList<Sal> makeSal(ArrayList<Integer> sal_nr, ArrayList<Integer> rækker, ArrayList<Integer> sæder){
+        ArrayList<Sal> x = new ArrayList<Sal>();
+        for(int i = 0; i < sal_nr.size(); i++){
+            Sal s = new Sal(sal_nr.get(i), rækker.get(i), sæder.get(i));
+            x.add(s);
+        }
+        return x;
+
+
+
     }
 
 }

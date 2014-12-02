@@ -34,12 +34,12 @@ public class Controller {
         }
     }
 
-    private void tjekBillet(){
-        ArrayList<Billet> x = ordere.makeBillet();
-        for(int i = 0; i < x.size(); i++){
-            x.get(i).printBillet();
-        }
-    }
+   // private void tjekBillet(){
+     //   ArrayList<Billet> x = ordere.downloadBillet();
+       // for(int i = 0; i < x.size(); i++){
+         //   x.get(i).printBillet();
+        //}
+    //}
 
     private void tjekForestillinger(){
         ArrayList<String[]> forestillinger = ordere.downloadForestillinger();
@@ -64,5 +64,14 @@ public class Controller {
         for(int i = 0; i < x.size(); i++){
            System.out.println(x.get(i));
         }
+    }
+
+    //test til billet print.
+    private void tjekBillet() {
+        ArrayList<ArrayList<Integer>> billetList = ordere.downloadBillet();
+        for (int i = 0; i < billetList.size(); i++)
+            for (int j = 0; j < billetList.get(i).size(); j++){
+                System.out.println(billetList.get(j));
+            }
     }
 }
