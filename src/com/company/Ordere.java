@@ -63,6 +63,30 @@ public class Ordere {
         return filmName;
     }
 
+    public ArrayList<String[]> downloadForestillinger(){
+        ArrayList<String[]> forestillings_list = new ArrayList<String[]>();
+
+        // Først henter vi alle de arrays der skal bruges.
+        db.openConnection();
+        ArrayList<Integer> forestilling_film_id = db.sqlCommandSelectFromGetInt("film_id","Forestilling");
+        ArrayList<String> forestilling_sal_nr = db.sqlCommandSelectFromGetString("sal_nr", "Forestilling");
+        ArrayList<String> forestilling_tid = db.sqlCommandSelectFromGetString("tid", "Forestilling");
+        ArrayList<String> forestilling_dag =db.sqlCommandSelectFromGetString("dag", "Forestilling");
+
+        ArrayList<String> film_navn = db.sqlCommandSelectFromGetString("navn","Film");
+        db.closeConnection();
+
+        // Så ligger vi dem sammen i en forestillings Arrayliste med lister af strings.
+        for (int i = 0; i < forestilling_film_id.size(); i++) {
+            String[] forestilling = new String[]
+            {film_navn.get(forestilling_film_id.get(i)-1),forestilling_sal_nr.get(i),forestilling_tid.get(i),forestilling_dag.get(i)};
+            forestillings_list.add(forestilling);
+        }
+
+
+        return forestillings_list;
+    }
+
     private void makeFilms(){
         // nu er der en dummy version med fake data i Listerne
         films = new ArrayList<String>();

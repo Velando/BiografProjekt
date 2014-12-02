@@ -13,8 +13,9 @@ public class Controller {
          //screen = new Screen();
         ordere = new Ordere();
         // setupScreen();
-        tjekBillet();
-        //tjekFilmList();
+        // tjekBillet();
+        // tjekFilmList();
+        tjekForestillinger();
     }
     private void setupScreen(){
         for(int i = 0; i < ordere.getFilmsLength(); i++){
@@ -40,7 +41,17 @@ public class Controller {
         }
     }
 
+    private void tjekForestillinger(){
+        ArrayList<String[]> forestillinger = ordere.downloadForestillinger();
 
+        for (String[] string: forestillinger) {
+            System.out.print(string[0] + "   ");
+            System.out.print(string[1]+ "   ");
+            System.out.print(string[2]+ "   ");
+            System.out.println(string[3]);
+        }
+
+    }
     // meningen med denn er at finde ud salen.
     private void tjekSeats(int forestil_id){
 
