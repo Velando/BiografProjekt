@@ -13,7 +13,7 @@ public class Controller {
          //screen = new Screen();
         ordere = new Ordere();
         // setupScreen();
-        // tjekBillet();
+        tjekBillet();
         // tjekFilmList();
         tjekForestillinger();
     }
@@ -69,9 +69,11 @@ public class Controller {
     //test til billet print.
     private void tjekBillet() {
         ArrayList<ArrayList<Integer>> billetList = ordere.downloadBillet();
-        for (int i = 0; i < billetList.size(); i++)
-            for (int j = 0; j < billetList.get(i).size(); j++){
-                System.out.println(billetList.get(j));
+        for (int i = 0; i < billetList.size(); i++) {
+            System.out.println();
+            for (int j = 0; j < billetList.get(i).size(); j++) {
+                System.out.print(billetList.get(j).get(i) + " ");
             }
+        }
     }
 }
