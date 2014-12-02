@@ -15,31 +15,12 @@ public class Controller {
         // setupScreen();
         tjekBillet();
         // tjekFilmList();
-        tjekForestillinger();
+        //tjekForestillinger();
+        tjekReservationer();
     }
     private void setupScreen(){
-        for(int i = 0; i < ordere.getFilmsLength(); i++){
-            System.out.println(ordere.getFilm(i));
-        }
-        int i;
-        for(i= 0; i< ordere.getForestillngerLength() ; i++) {
-            System.out.print(ordere.getForestiling(i) + "   " + ordere.getTidspunktTilForestilling(i) + "   ");
-        }
-        for(i= 0; i<10;i++){
-            System.out.println();
-            for(int j = 0; j<10;j++){
-                if(ordere.isThisSeatTaken(i,j) != null) System.out.print("X ");
-                else System.out.print(". ");
-            }
-        }
-    }
 
-   // private void tjekBillet(){
-     //   ArrayList<Billet> x = ordere.downloadBillet();
-       // for(int i = 0; i < x.size(); i++){
-         //   x.get(i).printBillet();
-        //}
-    //}
+    }
 
     private void tjekForestillinger(){
         ArrayList<String[]> forestillinger = ordere.downloadForestillinger();
@@ -50,6 +31,12 @@ public class Controller {
             System.out.print(string[2]+ "   ");
             System.out.println(string[3]);
         }
+
+    }
+
+    private void tjekReservationer(){
+        ArrayList<Integer> reservationer = ordere.downloadReservationer();
+        System.out.print(reservationer);
 
     }
     // meningen med denn er at finde ud salen.
