@@ -81,6 +81,6 @@ public class Controller {
     }
 
     private void test2(){
-        System.out.println(ordere.filmTid("Mandag"));
+        System.out.println(ordere.filmTid1("Mandag"));
     }
 }

@@ -161,5 +161,19 @@ public class Ordere {
         return filmTidList;
     }
 
+    public ArrayList<String> filmTid1(String dag){
+        ArrayList<String> filmTid = new ArrayList<String>();
+
+        ArrayList<String[]> x = downloadForestillinger();
+        for (int i = 0; i < x.size(); i++) {
+            for(int j = 0; j < x.get(j).length; j++) {
+                if (x.get(i)[j].equals(dag)) {
+                    filmTid.add(x.get(i)[0] + " " + x.get(i)[2]); //index 0 = filmnavn - index 2 = tidspunkt
+                }
+            }
+        }
+        return filmTid;
+    }
+
 
 }
