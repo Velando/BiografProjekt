@@ -13,29 +13,46 @@ public class Ordere {
         db = new DB();
     }
 
-    public ArrayList<ArrayList<Integer>> downloadBillet(){
+    public ArrayList<String[]> downloadBillet(String tlf_nr){
+
         db.openConnection();
-        ArrayList<Integer> billet_nr = db.sqlCommandSelectFromGetInt("billet_nr", "Billet");
-        ArrayList<Integer> res_id = db.sqlCommandSelectFromGetInt("res_id", "Billet");
-        ArrayList<Integer> forestil_id = db.sqlCommandSelectFromGetInt("forestil_id", "Billet");
-        ArrayList<Integer> række = db.sqlCommandSelectFromGetInt("række", "Billet");
-        ArrayList<Integer> sæde = db.sqlCommandSelectFromGetInt("sæde_nr", "Billet");
+        // først finder vi res_iden der passer til tlf nummeret
+        ArrayList<Integer> res_id_list = db.sqlCommandSelectFromGetInt("res_id","Reservation","tlf_nr =" + tlf_nr);
+        int res_id = res_id_list.get(0);
 
+        // så henter vi de lister der har der rigtige res id fra billet tabellen
+        ArrayList<Integer> forestil_id = db.sqlCommandSelectFromGetInt("forestil_id", "Billet", "res_id =" + res_id);
+        ArrayList<String> række = db.sqlCommandSelectFromGetString("række", "Billet", "res_id =" + res_id);
+        ArrayList<String> sæde = db.sqlCommandSelectFromGetString("sæde_nr", "Billet", "res_id =" + res_id);
 
+        // vi skal også bruge forestillingerne så vi ved hvilken film billetterne er til.
+        // (denne her kan laves smartere tror jeg)
+        ArrayList<String[]> forestillinger = downloadForestillinger();
 
         db.closeConnection();
-        ArrayList<ArrayList<Integer>> billetList = new ArrayList<ArrayList<Integer>>();
 
-        billetList.add(billet_nr);
-        billetList.add(res_id);
-        billetList.add(forestil_id);
-        billetList.add(række);
-        billetList.add(sæde);
+        // nu opretter vi den liste der skal retuneres
+        ArrayList<String[]> billetList = new ArrayList<String[]>();
 
+        // i dette loop tilføjer vi alle de forskellige ellemeter ind i listen så vi kan hente de forskellige elementer efter behov.
+        for (int i = 0; i < forestil_id.size(); i++) {
+            String[] forestilling = new String[]{
+                    // film navn
+                    forestillinger.get(forestil_id.get(i))[0],
+                    // sal nr
+                    forestillinger.get(forestil_id.get(i))[1],
+                    // tidspunkt
+                    forestillinger.get(forestil_id.get(i))[2],
+                    // dag
+                    forestillinger.get(forestil_id.get(i))[3],
+                    //række
+                    række.get(i),
+                    //sæde
+                    sæde.get(i),
+            };
+            billetList.add(forestilling);
+        }
         return billetList;
-
-
-
     }
 
     public ArrayList<String> downloadFilms(){
@@ -70,10 +87,10 @@ public class Ordere {
         return forestillings_list;
     }
 
-    public ArrayList<Integer> downloadReservationer(){
+    public ArrayList<String> downloadReservationer(){
         // her kan vi direkte hente alle reservations telefonnumre.
         db.openConnection();
-        ArrayList<Integer> reservationer = db.sqlCommandSelectFromGetInt("tlf_nr", "Reservation");
+        ArrayList<String> reservationer = db.sqlCommandSelectFromGetString("tlf_nr", "Reservation");
         db.closeConnection();
         return reservationer;
     }

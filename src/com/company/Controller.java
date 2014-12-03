@@ -11,11 +11,11 @@ public class Controller {
     public Controller(){
         ordere = new Ordere();
         // setupScreen();
-        // tjekBillet();
+        tjekBillet("27289200");
         // tjekFilmList();
         // tjekForestillinger();
         // tjekReservationer();
-        tjekSeats(1);
+        //tjekSeats(1);
     }
     private void setupScreen(){
 
@@ -34,7 +34,7 @@ public class Controller {
     }
 
     private void tjekReservationer(){
-        ArrayList<Integer> reservationer = ordere.downloadReservationer();
+        ArrayList<String> reservationer = ordere.downloadReservationer();
         System.out.print(reservationer);
     }
 
@@ -64,13 +64,16 @@ public class Controller {
     }
 
     //test til billet print.
-    private void tjekBillet() {
-        ArrayList<ArrayList<Integer>> billetList = ordere.downloadBillet();
-        for (int i = 0; i < billetList.size(); i++) {
-            System.out.println();
-            for (int j = 0; j < billetList.get(i).size(); j++) {
-                System.out.print(billetList.get(j).get(i) + " ");
-            }
+    private void tjekBillet(String tlf_nr) {
+        ArrayList<String[]> billetList = ordere.downloadBillet(tlf_nr);
+
+        for (String[] string: billetList) {
+            System.out.print(string[0] + "   ");
+            System.out.print(string[1]+ "   ");
+            System.out.print(string[2]+ "   ");
+            System.out.print(string[3] + "   ");
+            System.out.print(string[4]+ "   ");
+            System.out.println(string[5]);
         }
     }
 }
