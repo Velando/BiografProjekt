@@ -140,4 +140,26 @@ public class Ordere {
         }
         return listToBeReturned;
     }
+
+    //film + tid
+    public ArrayList<ArrayList<String>> filmTid(String filmnavn){
+        ArrayList<ArrayList<String>> filmTidList = new ArrayList<ArrayList<String>>();
+        ArrayList<String> dag = new ArrayList<String>();
+        ArrayList<String> tid = new ArrayList<String>();
+
+        ArrayList<String[]> x = downloadForestillinger();
+        for (int i = 0; i < x.size(); i++) {
+            for(int j = 0; j < x.get(j).length; j++) {
+                if (x.get(i)[j].equals(filmnavn)) {
+                    dag.add(x.get(i)[0]); //index 3 burde være dag - automatiser om muligt??
+                    tid.add(x.get(i)[2]); //index 2 burde være tidspunkt - automatiser om muligt??
+                }
+            }
+        }
+        filmTidList.add(dag);
+        filmTidList.add(tid);
+        return filmTidList;
+    }
+
+
 }

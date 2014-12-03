@@ -109,7 +109,7 @@ public class DB {
     public ArrayList<String> sqlCommandSelectFromGetString(String select,String from, String where) {
         ArrayList<String> listToBeReturned = new ArrayList<String>();
         try {
-            String sql = "SELECT * FROM " + from + " WHERE (" + where + ")";
+            String sql = "SELECT " +select +" FROM " + from + " WHERE (" + where + ")";
 
             ResultSet rs = statement.executeQuery(sql); // this line executes the query
 

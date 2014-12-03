@@ -6,16 +6,19 @@ import java.util.ArrayList;
  * Created by Sebastian on 26-11-2014.
  */
 public class Controller {
+    //private GUI gui = new GUI();
     // private Screen screen;
     private Ordere ordere;
     public Controller(){
+
         ordere = new Ordere();
         // setupScreen();
-        tjekBillet("27289200");
+        //tjekBillet("27289200");
         // tjekFilmList();
         // tjekForestillinger();
         // tjekReservationer();
         //tjekSeats(1);
+        test2();
     }
     private void setupScreen(){
 
@@ -75,5 +78,9 @@ public class Controller {
             System.out.print(string[4]+ "   ");
             System.out.println(string[5]);
         }
+    }
+
+    private void test2(){
+        System.out.println(ordere.filmTid("Mandag"));
     }
 }
