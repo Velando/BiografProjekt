@@ -9,14 +9,12 @@ public class Controller {
     // private Screen screen;
     private Ordere ordere;
     public Controller(){
-        super();
-         //screen = new Screen();
         ordere = new Ordere();
         // setupScreen();
-        //tjekBillet();
+        // tjekBillet();
         // tjekFilmList();
-        //tjekForestillinger();
-        //tjekReservationer();
+        // tjekForestillinger();
+        // tjekReservationer();
         tjekSeats(1);
     }
     private void setupScreen(){
@@ -39,27 +37,22 @@ public class Controller {
         ArrayList<Integer> reservationer = ordere.downloadReservationer();
         System.out.print(reservationer);
     }
-    // meningen med denn er at finde ud salen.
+
+    // meningen med denne er at finde ud af hvilke pladser i salen er reserveret.
     private void tjekSeats(int forestil_id){
-        ArrayList<Boolean> list1 = ordere.downloadSeatsForforestilling(forestil_id);
-
-        System.out.println(list1.size());
+        ArrayList<Boolean> seatList = ordere.downloadSeatsForforestilling(forestil_id);
 
 
-        for (int i = 0 ;i < list1.size();i++) {
-            if(list1.get(i) == null){
+        for (int i = 0 ;i < seatList.size();i++) {
+            if(seatList.get(i) == null){
                 System.out.println(" null");
 
-            }else if(list1.get(i) == false){
+            }else if(seatList.get(i) == false){
                 System.out.print(". ");
             }else{
                 System.out.print("X ");
             }
         }
-
-
-        System.out.println("this is to tjek where we are");
-
     }
 
     private void tjekFilmList(){
