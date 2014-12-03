@@ -16,7 +16,7 @@ public class Controller {
         tjekBillet();
         // tjekFilmList();
         //tjekForestillinger();
-        tjekReservationer();
+        //tjekReservationer();
     }
     private void setupScreen(){
 
@@ -37,7 +37,6 @@ public class Controller {
     private void tjekReservationer(){
         ArrayList<Integer> reservationer = ordere.downloadReservationer();
         System.out.print(reservationer);
-
     }
     // meningen med denn er at finde ud salen.
     private void tjekSeats(int forestil_id){
@@ -45,7 +44,6 @@ public class Controller {
     }
 
     private void tjekFilmList(){
-
         ArrayList<String> x = ordere.downloadFilms();
 
         for(int i = 0; i < x.size(); i++){

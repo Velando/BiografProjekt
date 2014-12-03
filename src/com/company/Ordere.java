@@ -1,25 +1,12 @@
 package com.company;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Sebastian on 26-11-2014.
  */
 public class Ordere {
-    //fields
-    // liste af alle film
-    private ArrayList<String> films;
-    // liste af alle forestillinger
-    private ArrayList<String> forestillinger;
-    // liste af tidspunkter til forestillinger som skal stemme overens med forstillingerne
-    private ArrayList<Double> tidspunkterTilForestillinger;
-    // sal til den enkelte forestilling (husk om vi skal hente dem eller ikke)
-    private Boolean[][] seats;
 
     private DB db;
-
-
 
     //the constructor
     public Ordere(){
@@ -89,19 +76,35 @@ public class Ordere {
         return reservationer;
     }
 
-    // virker ikke endnu har ikke en god ide.
-    private ArrayList<Boolean[]> getSæderTilForestilling(int forestil_nr){
+    public ArrayList<ArrayList<Boolean>> downloadSeatsForforestilling(int forestil_id){
+        ArrayList<ArrayList<Boolean>> listToBeReturned = new ArrayList<ArrayList<Boolean>>();
+        ArrayList<Boolean> listofSeatsOnOneRow = new ArrayList<Boolean>();
 
-        ArrayList<Integer> række_list = db.sqlCommandSelectFromGetInt("række", "billet", "forstil_nr = " + forestil_nr);
-        ArrayList<Integer> sæde_list = db.sqlCommandSelectFromGetInt("sæde","billet","forstil_nr = " + forestil_nr);
+        db.openConnection();
+        ArrayList<Integer> rowList = db.sqlCommandSelectFromGetInt("row","billet", "forestil_id =" + forestil_id);
+        ArrayList<Integer> seatList= db.sqlCommandSelectFromGetInt("seat","billet", "forestil_id =" + forestil_id);
+        db.closeConnection();
 
-        ArrayList<Boolean[]> x = new ArrayList<Boolean[]>();
+        int row = 1;
+        int seat = 1;
+        int currentPointOnLists = 0;
 
-        for (Integer i: række_list) {
-            række_list.get(i);
-
+        while(rowList.size() > currentPointOnLists){
+            if(rowList.get(currentPointOnLists) == row){
+                if(seatList.get(currentPointOnLists) == seat){
+                    listofSeatsOnOneRow.add(true);
+                    currentPointOnLists++;
+                    seat++;
+                }else{
+                    listofSeatsOnOneRow.add(false);
+                    seat++;
+                }
+            }else{
+                listofSeatsOnOneRow.add(null);
+                listToBeReturned.add(listofSeatsOnOneRow);
+                row++;
+            }
         }
-
-        return x;
+        return listToBeReturned;
     }
 }
