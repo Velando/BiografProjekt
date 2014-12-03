@@ -76,14 +76,15 @@ public class Ordere {
         return reservationer;
     }
 
-    public ArrayList<ArrayList<Boolean>> downloadSeatsForforestilling(int forestil_id){
-        ArrayList<ArrayList<Boolean>> listToBeReturned = new ArrayList<ArrayList<Boolean>>();
-        ArrayList<Boolean> listofSeatsOnOneRow = new ArrayList<Boolean>();
+    public ArrayList<Boolean> downloadSeatsForforestilling(int forestil_id){
+        ArrayList<Boolean> listToBeReturned = new ArrayList<Boolean>();
 
         db.openConnection();
-        ArrayList<Integer> rowList = db.sqlCommandSelectFromGetInt("row","billet", "forestil_id =" + forestil_id);
-        ArrayList<Integer> seatList= db.sqlCommandSelectFromGetInt("seat","billet", "forestil_id =" + forestil_id);
+        ArrayList<Integer> rowList = db.sqlCommandSelectFromGetInt("række","Billet", "forestil_id =" + forestil_id);
+        ArrayList<Integer> seatList= db.sqlCommandSelectFromGetInt("sæde_nr","Billet", "forestil_id =" + forestil_id);
         db.closeConnection();
+
+        // på en eller anden måde skal vi sortere disse så de kommer i en rækkefølge hvor row og seat altid stiger
 
         int row = 1;
         int seat = 1;
@@ -92,17 +93,17 @@ public class Ordere {
         while(rowList.size() > currentPointOnLists){
             if(rowList.get(currentPointOnLists) == row){
                 if(seatList.get(currentPointOnLists) == seat){
-                    listofSeatsOnOneRow.add(true);
+                    listToBeReturned.add(true);
                     currentPointOnLists++;
                     seat++;
                 }else{
-                    listofSeatsOnOneRow.add(false);
+                    listToBeReturned.add(false);
                     seat++;
                 }
             }else{
-                listofSeatsOnOneRow.add(null);
-                listToBeReturned.add(listofSeatsOnOneRow);
+                listToBeReturned.add(null);
                 row++;
+                seat = 1;
             }
         }
         return listToBeReturned;

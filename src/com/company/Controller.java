@@ -13,10 +13,11 @@ public class Controller {
          //screen = new Screen();
         ordere = new Ordere();
         // setupScreen();
-        tjekBillet();
+        //tjekBillet();
         // tjekFilmList();
         //tjekForestillinger();
         //tjekReservationer();
+        tjekSeats(1);
     }
     private void setupScreen(){
 
@@ -40,6 +41,24 @@ public class Controller {
     }
     // meningen med denn er at finde ud salen.
     private void tjekSeats(int forestil_id){
+        ArrayList<Boolean> list1 = ordere.downloadSeatsForforestilling(forestil_id);
+
+        System.out.println(list1.size());
+
+
+        for (int i = 0 ;i < list1.size();i++) {
+            if(list1.get(i) == null){
+                System.out.println(" null");
+
+            }else if(list1.get(i) == false){
+                System.out.print(". ");
+            }else{
+                System.out.print("X ");
+            }
+        }
+
+
+        System.out.println("this is to tjek where we are");
 
     }
 
