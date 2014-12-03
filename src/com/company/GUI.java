@@ -18,6 +18,8 @@ public class GUI {
     private JPanel centerGrid = new JPanel(new GridLayout(0,3));
     private JTabbedPane tabbedPane = new JTabbedPane();
 
+    Ordere ordere = new Ordere();
+
 
     public GUI() {
         makeFrame();
@@ -45,15 +47,19 @@ public class GUI {
 
     private void getMandag(){
         //get shows for mandag
-        ArrayList<String> l = new ArrayList<String>();
-
-        l.add("gg dinfar");
-        l.add("noget andet");
-        l.add("lolololo");
+        ArrayList<ArrayList<String>> l = ordere.filmTid("Mandag");
+        ArrayList<String> list = new ArrayList<String>();
 
         centerGrid.removeAll();
 
-        for(String s: l) {
+        ArrayList<String> film = l.get(0);
+        ArrayList<String> tid = l.get(1);
+
+        for(int i = 0; i < film.size(); i++) {
+            list.add(film.get(i) + " " + tid.get(i));
+        }
+
+        for(String s: list) {
             centerGrid.add(new JButton(s));
         }
 
@@ -267,12 +273,12 @@ public class GUI {
         dagPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         dagPane.setLayout(new BorderLayout(6, 6));
 
-        //build WEST section of the window
-        makeDagWest();
+        //build film tab
         makeFilmWest();
-
-        //build CENTER section of the window
         makeFilmCenter();
+
+        //build dag tab
+        makeDagWest();
         getMandag();
 
         tabbedPane.addTab("Film", filmPane);
