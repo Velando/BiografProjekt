@@ -15,10 +15,12 @@ public class Controller {
         // setupScreen();
         //tjekBillet("27289200");
         // tjekFilmList();
-        // tjekForestillinger();
+        //tjekForestillinger();
         // tjekReservationer();
         //tjekSeats(1);
-        test2();
+        //testDownloadForestillingSpecifikdag();
+        //test2();
+        tjekgetForesitillingerTilBestemtFilm();
     }
     private void setupScreen(){
 
@@ -32,6 +34,17 @@ public class Controller {
             System.out.print(string[1]+ "   ");
             System.out.print(string[2]+ "   ");
             System.out.println(string[3]);
+        }
+
+    }
+
+    private void tjekgetForesitillingerTilBestemtFilm(){
+        ArrayList<String[]> forestillinger = ordere.downloadForestillingerBestemtFilm("Kagezilla");
+
+        for (String[] string: forestillinger) {
+            System.out.print(string[0] + "   ");
+            System.out.println(string[1]+ "   ");
+
         }
 
     }
@@ -80,7 +93,17 @@ public class Controller {
         }
     }
 
+    private void testDownloadForestillingSpecifikdag(){
+        ArrayList<String[]> forestillinger = ordere.downloadForestillingerBestemtDag("Mandag");
+
+        for (String[] string: forestillinger) {
+            System.out.print(string[0] + "   ");
+            System.out.print(string[1]+ "   ");
+            System.out.println(string[2]);
+        }
+    }
+
     private void test2(){
-        System.out.println(ordere.filmTid1("Mandag"));
+        System.out.println(ordere.filmTid("Mandag"));
     }
 }

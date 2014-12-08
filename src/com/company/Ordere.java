@@ -58,7 +58,7 @@ public class Ordere {
     public ArrayList<String> downloadFilms(){
         // her kan vi direkte hente alle film navnene
         db.openConnection();
-        ArrayList<String> filmName = db.sqlCommandSelectFromGetString("navn", "film");
+        ArrayList<String> filmName = db.sqlCommandSelectFromGetString("navn", "Film");
         db.closeConnection();
         return filmName;
     }
@@ -82,6 +82,55 @@ public class Ordere {
         for (int i = 0; i < forestilling_film_id.size(); i++) {
             String[] forestilling = new String[]
             {film_navn.get(forestilling_film_id.get(i)-1),forestilling_sal_nr.get(i),forestilling_tid.get(i),forestilling_dag.get(i)};
+            forestillings_list.add(forestilling);
+        }
+        return forestillings_list;
+    }
+
+    public ArrayList<String[]> downloadForestillingerBestemtFilm(String filmNavn){
+        ArrayList<String[]> forestillings_list = new ArrayList<String[]>();
+
+        // Først henter vi alle de arrays der skal bruges.
+        db.openConnection();
+        ArrayList<Integer> film_id = db.sqlCommandSelectFromGetInt("film_id", "Film", "navn = '" + filmNavn + "'");
+
+        ArrayList<String> forestilling_sal_nr = db.sqlCommandSelectFromGetString("sal_nr", "Forestilling","film_id = "  + film_id.get(0));
+        ArrayList<String> forestilling_tid = db.sqlCommandSelectFromGetString("tid", "Forestilling","film_id = "  + film_id.get(0));
+        ArrayList<String> forestilling_dag =db.sqlCommandSelectFromGetString("dag", "Forestilling","film_id = "  + film_id.get(0));
+
+        db.closeConnection();
+
+        // Så ligger vi dem sammen i en forestillings Arrayliste med lister af strings.
+        // de vil ligge således
+        // (film navn , sal nr, tidspunkt, dag)
+        for (int i = 0; i < forestilling_sal_nr.size(); i++) {
+            String[] forestilling = new String[]
+                    {forestilling_sal_nr.get(i),forestilling_tid.get(i),forestilling_dag.get(i)};
+            forestillings_list.add(forestilling);
+        }
+        return forestillings_list;
+    }
+
+
+    // heri inputter man dag aka mandag tirsdag...
+    public ArrayList<String[]> downloadForestillingerBestemtDag(String dag){
+        ArrayList<String[]> forestillings_list = new ArrayList<String[]>();
+
+        // Først henter vi alle de arrays der skal bruges.
+        db.openConnection();
+        ArrayList<Integer> forestilling_film_id = db.sqlCommandSelectFromGetInt("film_id","Forestilling","dag = '" + dag + "'");
+        ArrayList<String> forestilling_sal_nr = db.sqlCommandSelectFromGetString("sal_nr", "Forestilling", "dag = '" + dag + "'");
+        ArrayList<String> forestilling_tid = db.sqlCommandSelectFromGetString("tid", "Forestilling","dag = '" + dag + "'");
+
+        ArrayList<String> film_navn = db.sqlCommandSelectFromGetString("navn","Film");
+        db.closeConnection();
+
+        // Så ligger vi dem sammen i en forestillings Arrayliste med lister af strings.
+        // de vil ligge således
+        // (film navn , sal nr, tidspunkt, dag)
+        for (int i = 0; i < forestilling_film_id.size(); i++) {
+            String[] forestilling = new String[]
+                    {film_navn.get(forestilling_film_id.get(i)-1),forestilling_sal_nr.get(i),forestilling_tid.get(i)};
             forestillings_list.add(forestilling);
         }
         return forestillings_list;

@@ -39,28 +39,42 @@ public class GUI {
         l.add("Torsdag 21:30");
 
         for(String s: l) {
-            centerGrid.add(new JButton(s));
+            JButton j = new JButton(s);
+            j.setFont(getFont());
+            centerGrid.add(j);
         }
 
         filmPane.add(centerGrid, BorderLayout.CENTER);
     }
 
-    private void getMandag(){
-        //get shows for mandag
-        ArrayList<ArrayList<String>> l = ordere.filmTid("Mandag");
-        ArrayList<String> list = new ArrayList<String>();
+    private void getForestillingerTilFilm(String filmNavn){
+        //get shows for specific films
+        ArrayList<String[]> l = ordere.downloadForestillingerBestemtFilm(filmNavn);
+
 
         centerGrid.removeAll();
 
-        ArrayList<String> film = l.get(0);
-        ArrayList<String> tid = l.get(1);
-
-        for(int i = 0; i < film.size(); i++) {
-            list.add(film.get(i) + " " + tid.get(i));
+        for (String[] strings : l) {
+            String s = "tid " + strings[1] + " dag " + strings[2];
+            JButton j = new JButton(s);
+            j.setFont(getFont());
+            centerGrid.add(j);
         }
 
-        for(String s: list) {
-            centerGrid.add(new JButton(s));
+        filmPane.add(centerGrid, BorderLayout.CENTER);
+        filmPane.revalidate();
+        filmPane.repaint();
+    }
+
+    private void getMandag(){
+        //get shows for mandag
+        ArrayList<String[]> l = ordere.downloadForestillingerBestemtDag("Mandag");
+
+        centerGrid.removeAll();
+
+        for (String[] strings : l) {
+          String s = strings[0]+ "  " + strings[2];
+          centerGrid.add(new JButton(s));
         }
 
         dagPane.add(centerGrid, BorderLayout.CENTER);
@@ -186,17 +200,21 @@ public class GUI {
         JPanel westGrid = new JPanel(new GridLayout(0,1));
 
         //get some ArrayList with movie names
-        ArrayList<String> l = new ArrayList<String>();
-        l.add("Langt filmnanv lolo");
-        l.add("kortere");
-        l.add("noget med kage");
-        l.add("mere kage i rummet");
-        l.add("blablablablablablablablablablabla");
+        ArrayList<String> l = ordere.downloadFilms();
 
-        for(String s: l){
-            westGrid.add(new JButton(s));
+        for(final String s: l){
+            JButton j = new JButton(s);
+            j.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("pressed " + s);
+                    getForestillingerTilFilm(s);}
+            });
+            j.setFont(getFont());
+            westGrid.add(j);
         }
 
+        westGrid.setFont(getFont());
         JPanel flow = new JPanel();
         flow.add(westGrid);
         flow.setBorder(new LineBorder(Color.BLACK));
@@ -258,11 +276,15 @@ public class GUI {
         dagPane.add(flow, BorderLayout.WEST);
     }
 
+    private Font getFont() {
+        Font font = new Font("Times New Roman", Font.PLAIN, 10*getScale());
+        return font;
+    }
 
     private int getScale() {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
-        return d.width/1366;
+        return d.width/700;
     }
 
     private void makeFrame(){
@@ -283,18 +305,18 @@ public class GUI {
 
         tabbedPane.addTab("Film", filmPane);
         tabbedPane.addTab("Dag", dagPane);
+        tabbedPane.setFont(getFont());
 
         contentPane.add(tabbedPane);
 
         //building is done - arrange the components7
-        Font font = new Font("Times New Roman", Font.PLAIN, 12*getScale());
-                frame.setFont(font);
+        frame.setFont(getFont());
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(480, 320);
+        frame.setSize(480 * getScale(), 320 * getScale());
         frame.setLocation(d.width/2 - frame.getWidth()/2, d.height/2 - frame.getHeight()/2);
 
         frame.setVisible(true);
