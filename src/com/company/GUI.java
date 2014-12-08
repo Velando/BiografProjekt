@@ -77,6 +77,17 @@ public class GUI {
           centerGrid.add(new JButton(s));
         }
 
+        for(String s: list) {
+            JButton btn = new JButton(s);
+            btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("klik " + e.getActionCommand());
+                }
+            });
+            centerGrid.add(btn);
+        }
+
         dagPane.add(centerGrid, BorderLayout.CENTER);
         dagPane.revalidate();
         dagPane.repaint();
@@ -112,7 +123,14 @@ public class GUI {
         centerGrid.removeAll();
 
         for(String s: l) {
-            centerGrid.add(new JButton(s));
+            JButton btn = new JButton(s);
+            btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("klik" + e.getActionCommand());
+                }
+            });
+            centerGrid.add(btn);
         }
 
         dagPane.add(centerGrid, BorderLayout.CENTER);
@@ -295,11 +313,11 @@ public class GUI {
         dagPane.setBorder(new EmptyBorder(12, 12, 12, 12));
         dagPane.setLayout(new BorderLayout(6, 6));
 
-        //build film tab
+        //build film tab content
         makeFilmWest();
         makeFilmCenter();
 
-        //build dag tab
+        //build dag tab content
         makeDagWest();
         getMandag();
 
