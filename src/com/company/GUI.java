@@ -25,28 +25,6 @@ public class GUI {
         makeFrame();
     }
 
-    private void makeFilmCenter(){
-        JPanel centerGrid = new JPanel(new GridLayout(0,3));
-
-        //get some ArrayList with show times for a specific movie
-        ArrayList<String> l = new ArrayList<String>();
-        l.add("Mandag 16:00");
-        l.add("Mandag 18:30");
-        l.add("Mandag 21:30");
-        l.add("Onsdag 16:00");
-        l.add("Onsdag 21:30");
-        l.add("Torsdag 18:30");
-        l.add("Torsdag 21:30");
-
-        for(String s: l) {
-            JButton j = new JButton(s);
-            j.setFont(getFont());
-            centerGrid.add(j);
-        }
-
-        filmPane.add(centerGrid, BorderLayout.CENTER);
-    }
-
     private void getForestillingerTilFilm(String filmNavn){
         //get shows for specific films
         ArrayList<String[]> l = ordere.downloadForestillingerBestemtFilm(filmNavn);
@@ -55,7 +33,7 @@ public class GUI {
         centerGrid.removeAll();
 
         for (String[] strings : l) {
-            String s = "tid " + strings[1] + " dag " + strings[2];
+            String s = strings[1] + " " + strings[2];
             JButton j = new JButton(s);
             j.setFont(getFont());
             centerGrid.add(j);
@@ -66,136 +44,15 @@ public class GUI {
         filmPane.repaint();
     }
 
-    private void getMandag(){
-        //get shows for mandag
-        ArrayList<String[]> l = ordere.downloadForestillingerBestemtDag("Mandag");
+    private void getDag(String dag){
+        //get shows for the given day, name and time
+        ArrayList<String[]> l = ordere.downloadForestillingerBestemtDag(dag);
 
         centerGrid.removeAll();
 
         for (String[] strings : l) {
           String s = strings[0]+ "  " + strings[2];
           centerGrid.add(new JButton(s));
-        }
-
-        dagPane.add(centerGrid, BorderLayout.CENTER);
-        dagPane.revalidate();
-        dagPane.repaint();
-    }
-
-    private void getTirsdag(){
-        //get shows for tirsdag
-        ArrayList<String> l = new ArrayList<String>();
-
-        l.add("filmen her");
-        l.add("blablabla");
-        l.add("blablablabal");
-
-        centerGrid.removeAll();
-
-        for(String s: l) {
-            centerGrid.add(new JButton(s));
-        }
-
-        dagPane.add(centerGrid, BorderLayout.CENTER);
-        dagPane.revalidate();
-        dagPane.repaint();
-    }
-
-    private void getOnsdag(){
-        //get shows for onsdag
-        ArrayList<String> l = new ArrayList<String>();
-
-        l.add("filmen her");
-        l.add("blablabla");
-        l.add("blablablabal");
-
-        centerGrid.removeAll();
-
-        for(String s: l) {
-            JButton btn = new JButton(s);
-            btn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("klik" + e.getActionCommand());
-                }
-            });
-            centerGrid.add(btn);
-        }
-
-        dagPane.add(centerGrid, BorderLayout.CENTER);
-        dagPane.revalidate();
-        dagPane.repaint();
-    }
-
-    private void getTorsdag(){
-        //get shows for torsdag
-        ArrayList<String> l = new ArrayList<String>();
-
-        l.add("filmen her");
-        l.add("blablabla");
-        l.add("blablablabal");
-
-        centerGrid.removeAll();
-
-        for(String s: l) {
-            centerGrid.add(new JButton(s));
-        }
-
-        dagPane.add(centerGrid, BorderLayout.CENTER);
-        dagPane.revalidate();
-        dagPane.repaint();
-    }
-
-    private void getFredag(){
-        //get shows for fredag
-        ArrayList<String> l = new ArrayList<String>();
-
-        l.add("filmen her");
-        l.add("blablabla");
-        l.add("blablablabal");
-
-        centerGrid.removeAll();
-
-        for(String s: l) {
-            centerGrid.add(new JButton(s));
-        }
-
-        dagPane.add(centerGrid, BorderLayout.CENTER);
-        dagPane.revalidate();
-        dagPane.repaint();
-    }
-
-    private void getLørdag(){
-        //get shows for lørdag
-        ArrayList<String> l = new ArrayList<String>();
-
-        l.add("filmen her");
-        l.add("blablabla");
-        l.add("blablablabal");
-
-        centerGrid.removeAll();
-
-        for(String s: l) {
-            centerGrid.add(new JButton(s));
-        }
-
-        dagPane.add(centerGrid, BorderLayout.CENTER);
-        dagPane.revalidate();
-        dagPane.repaint();
-    }
-
-    private void getSøndag(){
-        //get shows for søndag
-        ArrayList<String> l = new ArrayList<String>();
-
-        l.add("filmen her");
-        l.add("blablabla");
-        l.add("blablablabal");
-
-        centerGrid.removeAll();
-
-        for(String s: l) {
-            centerGrid.add(new JButton(s));
         }
 
         dagPane.add(centerGrid, BorderLayout.CENTER);
@@ -214,7 +71,6 @@ public class GUI {
             j.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("pressed " + s);
                     getForestillingerTilFilm(s);}
             });
             j.setFont(getFont());
@@ -235,37 +91,38 @@ public class GUI {
         JButton mandag = new JButton("Mandag");
         mandag.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {getMandag();}
+            public void actionPerformed(ActionEvent e) {
+                getDag("Mandag");}
         });
         JButton tirsdag = new JButton("Tirsdag");
         tirsdag.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {getTirsdag();}
+            public void actionPerformed(ActionEvent e) {getDag("Tirsdag");}
         });
         JButton onsdag = new JButton("Onsdag");
         onsdag.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {getOnsdag();}
+            public void actionPerformed(ActionEvent e) {getDag("Onsdag");}
         });
         JButton torsdag = new JButton("Torsdag");
         torsdag.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {getTorsdag();}
+            public void actionPerformed(ActionEvent e) {getDag("Torsdag");}
         });
         JButton fredag = new JButton("Fredag");
         fredag.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {getFredag();}
+            public void actionPerformed(ActionEvent e) {getDag("Fredag");}
         });
         JButton lørdag = new JButton("Lørdag");
         lørdag.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {getLørdag();}
+            public void actionPerformed(ActionEvent e) {getDag("Lørdag");}
         });
         JButton søndag = new JButton("Søndag");
         søndag.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {getSøndag();}
+            public void actionPerformed(ActionEvent e) {getDag("Søndag");}
         });
 
         westGrid.add(mandag);
@@ -291,7 +148,7 @@ public class GUI {
     private int getScale() {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
-        return d.width/700;
+        return d.width/900;
     }
 
     private void makeFrame(){
@@ -304,11 +161,11 @@ public class GUI {
 
         //build film tab content
         makeFilmWest();
-        makeFilmCenter();
+        //makeFilmCenter();
 
         //build dag tab content
         makeDagWest();
-        getMandag();
+        getDag("Mandag");
 
         tabbedPane.addTab("Film", filmPane);
         tabbedPane.addTab("Dag", dagPane);
