@@ -20,7 +20,8 @@ public class Controller {
         //tjekSeats(1);
         //testDownloadForestillingSpecifikdag();
         //test2();
-        tjekgetForesitillingerTilBestemtFilm();
+        //tjekgetForesitillingerTilBestemtFilm();
+        init();
     }
     private void setupScreen(){
 
@@ -103,7 +104,50 @@ public class Controller {
         }
     }
 
-    private void test2(){
-        System.out.println(ordere.filmTid("Mandag"));
+
+
+
+
+
+
+
+    //*****NY METODE DER ORDNER KLASSE HALLØJET - INITIALISERE EN MASSE OBJEKTER OG MATCHER DEM*******
+
+
+
+    // opretter film-, reservations- og forestillingsobjeker, samt tilknytter film og reservationer til forestilling.
+    // omdøbes på senere tidspunkt.
+    private void init(){
+        //Objekter af typen Reservation, Film og Forestilling oprettes her via metoder i ((ordere)) klassen, der har tilgang til DB.
+        ArrayList<Reservation> res = ordere.makeReservationer();
+        ArrayList<Film> film = ordere.makeFilm();
+        ArrayList<Forestilling> fore = ordere.makeForestillinger();
+
+
+        //Film_id sammenlignes for alle forestillings- og filmobjekter, således at vi kan tilknytte et filmobjekt
+        //til et forestillingsobjekt, så denne får relevante felter (relevant: navn på film)
+        for(Forestilling fo: fore)
+            for(Film fi: film)
+                if(fi.getFilm_id() == fo.getFilm_id())
+                    fo.setFilm(fi);
+
+
+        //Forestillings id sammenlignes for alle reservations- og forestillingsobjekter, således at vi kan tilknytte et
+        //reservationsobjekt til et forestillingsobjekt, så denne får relevante felter (relevant: række- og sædenr)
+        //De "matchende" reservationsobjekter samles i en ArrayListe i forestillingsobjektet til senere brug.
+        for(Forestilling fo: fore)
+            for(Reservation re: res)
+                if(re.getForestil_id() == fo.getForstil_id())
+                    fo.setReservationer(re);
+
+        //Gennem lavReservationer() initialiseres et boolean[][] med antal rækker og sæder fra Sal klassen (vil altid
+        //være 10x10 i vores tilfælde). Der itereres nu på alle reservationsobjekterne med et for each loop, der henter
+        //række- og sædenr fra reservationsobjektet, og ændre boolean værdien i dobbeltarrayet til true på de
+        //pågældende pladser. Altså ved vi nu, hvor der er lavet reservationer.
+        for(Forestilling fo: fore) {
+            fo.lavReservationer();
+        }
+
     }
+
 }
