@@ -77,17 +77,6 @@ public class GUI {
           centerGrid.add(new JButton(s));
         }
 
-        for(String s: list) {
-            JButton btn = new JButton(s);
-            btn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.println("klik " + e.getActionCommand());
-                }
-            });
-            centerGrid.add(btn);
-        }
-
         dagPane.add(centerGrid, BorderLayout.CENTER);
         dagPane.revalidate();
         dagPane.repaint();
