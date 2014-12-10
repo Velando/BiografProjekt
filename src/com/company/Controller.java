@@ -1,6 +1,8 @@
 package com.company;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Sebastian on 26-11-2014.
@@ -8,10 +10,16 @@ import java.util.ArrayList;
 public class Controller {
     //private GUI gui = new GUI();
     // private Screen screen;
-    private Ordere ordere;
+    private DB db = new DB();
+    private Ordere ordere = new Ordere();
+    //Objekter af typen Reservation, Film og Forestilling oprettes her via metoder i ((ordere)) klassen, der har tilgang til DB.
+
+    private ArrayList<Reservation> res = ordere.makeReservationer();
+    private ArrayList<Film> film = ordere.makeFilm();
+    private ArrayList<Forestilling> fore = ordere.makeForestillinger();
+
     public Controller(){
 
-        ordere = new Ordere();
         // setupScreen();
         //tjekBillet("27289200");
         // tjekFilmList();
@@ -104,8 +112,41 @@ public class Controller {
         }
     }
 
+    //Hent en forestillings visningsdag og -tidspunkt ud fra filmtitel
+    public ArrayList<String> getForestillingFilm(String filmNavn) {
 
+        ArrayList<String> dagTidList = new ArrayList<String>();
 
+        for(Forestilling f : fore) {
+
+            if (f.getFilmNavn().equals(filmNavn)) {
+                dagTidList.add(f.getDag() + " " + f.getTid());
+            }
+        }
+        return dagTidList;
+    }
+
+    //Hent en forestillings filmtitel og visningstidspunkt ud fra en dag
+    public ArrayList<String> getForestillingDag(String dag) {
+
+        ArrayList<String> filmTidList = new ArrayList<String>();
+
+        for(Forestilling f : fore){
+
+            if(f.getDag().equals(dag)){
+                filmTidList.add(f.getFilmNavn() + " " + f.getTid());
+            }
+        }
+        return filmTidList;
+    }
+
+    public ArrayList<String> downloadFilms(){
+        // her kan vi direkte hente alle film navnene
+        db.openConnection();
+        ArrayList<String> filmName = db.sqlCommandSelectFromGetString("navn", "Film");
+        db.closeConnection();
+        return filmName;
+    }
 
 
 
@@ -118,10 +159,6 @@ public class Controller {
     // opretter film-, reservations- og forestillingsobjeker, samt tilknytter film og reservationer til forestilling.
     // omdøbes på senere tidspunkt.
     private void init(){
-        //Objekter af typen Reservation, Film og Forestilling oprettes her via metoder i ((ordere)) klassen, der har tilgang til DB.
-        ArrayList<Reservation> res = ordere.makeReservationer();
-        ArrayList<Film> film = ordere.makeFilm();
-        ArrayList<Forestilling> fore = ordere.makeForestillinger();
 
 
         //Film_id sammenlignes for alle forestillings- og filmobjekter, således at vi kan tilknytte et filmobjekt

@@ -15,29 +15,58 @@ public class ReservationGUI {
     private JFrame frame = new JFrame("Reservation");
     private JPanel contentPane = (JPanel) frame.getContentPane();
     private JPanel reservationPane = new JPanel(new BorderLayout(6,6));
-    private String forestillingName;
+    private String forestillingNavn;
     private String forestillingTid;
+    private String forestillingDag;
 
-    public ReservationGUI() {
 
-        //this.forestillingName = forestilling;
-        //this.forestillingTid = tid;
+    public ReservationGUI(String navn, String dag, String tid) {
+
+        this.forestillingNavn = navn;
+        this.forestillingTid = tid;
+        this.forestillingDag = dag;
 
         makeFrame();
     }
 
     private void buildNorth() {
 
-        JLabel forestilling = new JLabel("Forestilling: blablakage   Tid: 00:00", SwingConstants.CENTER);
-        forestilling.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        String dagTid = forestillingDag + " " + forestillingTid;
+        String navn = forestillingNavn;
 
-        reservationPane.add(forestilling, BorderLayout.NORTH);
+        JLabel forestillingNavn = new JLabel(navn + " " + dagTid, SwingConstants.CENTER);
+        //JLabel forestillingDagTid = new JLabel(dagTid, SwingConstants.RIGHT);
+
+        forestillingNavn.setFont(new Font("Times New Roman", Font.BOLD, 18));
+
+        reservationPane.add(forestillingNavn, BorderLayout.NORTH);
+        //reservationPane.add(forestillingDagTid, BorderLayout.NORTH);
     }
 
     private void buildSouth() {
+
+        JPanel border = new JPanel(new BorderLayout(4,4));
+        JPanel flow = new JPanel();
+
         JLabel lærred = new JLabel("Lærred her", SwingConstants.CENTER);
         lærred.setFont(new Font("Times New Roman", Font.BOLD, 16));
-        reservationPane.add(lærred, BorderLayout.SOUTH);
+
+        JButton reserve = new JButton("Reservér");
+        JButton annuller = new JButton("Annullér");
+        annuller.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+
+        flow.add(reserve);
+        flow.add(annuller);
+
+        border.add(lærred, BorderLayout.CENTER);
+        border.add(flow, BorderLayout.EAST);
+
+        reservationPane.add(border, BorderLayout.SOUTH);
     }
 
     private void buildGrid() {
@@ -45,102 +74,41 @@ public class ReservationGUI {
         JPanel seatGrid = new JPanel(new GridLayout(10,10));
         seatGrid.setBorder(new EmptyBorder(12, 12, 12, 12));
 
-        Ordere o = new Ordere();
+        for(int i = 1; i < 11; i++) {
+            for (int j = 1; j < 11; j++) {
 
-        ArrayList<Boolean> seats = o.downloadSeatsForforestilling(1);
+                final String row = Integer.toString(i);
+                final String seat = Integer.toString(j);
 
-        int i = 1;
-        int j = 1;
+                String btnName = row + seat;
 
-        for (Boolean sæde : seats) {
-            if(sæde == null){
-                for (int j_o = j ;j_o < 11; j_o++) {
-                    final int row = i;
-                    final int seat = j_o;
-
-                    String btnName = Integer.toString(i) + " " + Integer.toString(j_o);
-                    final JButton btn = new JButton(btnName);
-                    btn.setBackground(Color.GREEN);
-                    btn.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
-                            btn.setBackground(Color.cyan);
-                            //makeReservation(forestilling, tlf_nr, row, seat);
+                final JButton btn = new JButton(btnName);
+                btn.setBackground(Color.GREEN);
+                btn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Pressed " + row + " " + seat);
+                        //makeReservation(forestilling, row, seat);
+                        if (btn.getBackground().equals(Color.GREEN)){
+                            btn.setBackground(Color.MAGENTA);
+                        } else {
+                            btn.setBackground(Color.GREEN);
                         }
-                    });
-                    JPanel flow = new JPanel();
-                    flow.add(btn);
-                    seatGrid.add(flow);
-                }
-                i++;
-                j = 1;
-            }else if (sæde == false){
-                final int row = i;
-                final int seat = j;
-
-                String btnName = Integer.toString(i) + " " + Integer.toString(j);
-                final JButton btn = new JButton(btnName);
-                btn.setBackground(Color.GREEN);
-                btn.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
-                        btn.setBackground(Color.cyan);
-                        //makeReservation(forestilling, tlf_nr, row, seat);
-                    }
-                });
-                JPanel flow = new JPanel();
-                flow.add(btn);
-                seatGrid.add(flow);
-                j++;
-            }else{
-                final int row = i;
-                final int seat = j;
-
-                String btnName = Integer.toString(i) + " " + Integer.toString(j);
-                final JButton btn = new JButton(btnName);
-                btn.setBackground(Color.RED);
-                btn.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
-                        //makeReservation(forestilling, tlf_nr, row, seat);
-                    }
-                });
-                JPanel flow = new JPanel();
-                flow.add(btn);
-                seatGrid.add(flow);
-                j++;
-            }
-        }
-
-        while (i < 11){
-            for (int j_o = j ;j_o < 11; j_o++) {
-                final int row = i;
-                final int seat = j_o;
-
-                String btnName = Integer.toString(i) + " " + Integer.toString(j_o);
-                final JButton btn = new JButton(btnName);
-                btn.setBackground(Color.GREEN);
-                btn.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
-                        btn.setBackground(Color.cyan);
-                        //makeReservation(forestilling, tlf_nr, row, seat);
                     }
                 });
                 JPanel flow = new JPanel();
                 flow.add(btn);
                 seatGrid.add(flow);
             }
-            i++;
-            j = 1;
         }
 
 
         reservationPane.add(seatGrid, BorderLayout.CENTER);
+
+    }
+
+    private void toBeReserved(int row, int seat){
+
 
     }
 
@@ -154,7 +122,7 @@ public class ReservationGUI {
 
         contentPane.add(reservationPane);
 
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.pack();
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();

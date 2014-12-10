@@ -49,6 +49,16 @@ public class Forestilling {
         return film;
     }
 
+    public String getFilmNavn() {
+        return film.getFilm_navn();
+    }
+
+    public String getDag(){
+        return dag;
+    }
+
+    public String getTid(){return tid;}
+
     public int getFilm_id(){
         return film_id;
     }

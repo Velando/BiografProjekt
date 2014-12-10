@@ -17,56 +17,15 @@ public class GUI {
     private JPanel dagPane = new JPanel(new BorderLayout(6*getScale(),6*getScale()));
     private JPanel centerGrid = new JPanel(new GridLayout(0,3));
     private JTabbedPane tabbedPane = new JTabbedPane();
+    private Controller controller = new Controller();
 
-    Ordere ordere = new Ordere();
-
-
-    public GUI() {
-        makeFrame();
-    }
-
-    private void getForestillingerTilFilm(String filmNavn){
-        //get shows for specific films
-        ArrayList<String[]> l = ordere.downloadForestillingerBestemtFilm(filmNavn);
-
-
-        centerGrid.removeAll();
-
-        for (String[] strings : l) {
-            String s = strings[1] + " " + strings[2];
-            JButton j = new JButton(s);
-            j.setFont(getFont(8));
-            centerGrid.add(j);
-        }
-
-        filmPane.add(centerGrid, BorderLayout.CENTER);
-        filmPane.revalidate();
-        filmPane.repaint();
-    }
-
-    private void getDag(String dag){
-        //get shows for the given day, name and time
-        ArrayList<String[]> l = ordere.downloadForestillingerBestemtDag(dag);
-
-        centerGrid.removeAll();
-
-        for (String[] strings : l) {
-            String s = strings[0]+ "  " + strings[2];
-            JButton j = new JButton(s);
-            j.setFont(getFont(8));
-            centerGrid.add(j);
-        }
-
-        dagPane.add(centerGrid, BorderLayout.CENTER);
-        dagPane.revalidate();
-        dagPane.repaint();
-    }
+    public GUI() {makeFrame();}
 
     private void makeFilmWest(){
         JPanel westGrid = new JPanel(new GridLayout(0,1));
 
         //get some ArrayList with movie names
-        ArrayList<String> l = ordere.downloadFilms();
+        ArrayList<String> l = controller.downloadFilms();
 
         for(final String s: l){
             JButton j = new JButton(s);
@@ -79,12 +38,45 @@ public class GUI {
             westGrid.add(j);
         }
 
+        westGrid.setFont(getFont());
         JPanel flow = new JPanel();
         flow.add(westGrid);
         flow.setBorder(new LineBorder(Color.BLACK));
 
         filmPane.add(flow, BorderLayout.WEST);
     }
+
+    private void getForestillingerTilFilm(String navn){
+        //get shows for specific films
+        ArrayList<String> l = controller.getForestillingFilm(navn);
+
+        centerGrid.removeAll();
+
+        for (String s : l) {
+            JButton btn = new JButton(s);
+
+            //lægger film dag og tid i to separate strings så de
+            //kan gives som input til ReservationGUI
+            final String filmDag = s.substring(0, s.length() - 6);
+            final String filmTid = s.substring(s.length() - 5);
+            final String filmNavn = navn;
+
+            btn.setFont(getFont());
+            btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new ReservationGUI(filmNavn, filmDag, filmTid);
+                }
+            });
+            centerGrid.add(btn);
+        }
+
+        filmPane.add(centerGrid, BorderLayout.CENTER);
+        filmPane.revalidate();
+        filmPane.repaint();
+    }
+
+
 
     private void makeDagWest() {
         JPanel westGrid = new JPanel(new GridLayout(0,1));
@@ -116,6 +108,39 @@ public class GUI {
         dagPane.add(flow, BorderLayout.WEST);
     }
 
+    private void getDag(String dag){
+        //get shows for the given day, name and time
+        ArrayList<String> l = controller.getForestillingDag(dag);
+
+        centerGrid.removeAll();
+
+        for (String s : l) {
+            JButton btn = new JButton(s);
+
+            //lægger film navn og tid i to separate strings så de kan
+            //gives som input til ReservationGUI
+            final String filmNavn = s.substring(0, s.length() - 6);
+            final String filmTid = s.substring(s.length() - 5);
+            final String filmDag = dag;
+
+            btn.setFont(getFont());
+            btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new ReservationGUI(filmNavn, filmDag, filmTid);
+                }
+            });
+            centerGrid.add(btn);
+        }
+
+        dagPane.add(centerGrid, BorderLayout.CENTER);
+        dagPane.revalidate();
+        dagPane.repaint();
+    }
+
+    private Font getFont() {
+        return new Font("Times New Roman", Font.PLAIN, 12 * getScale());
+    }
     private Font getFont(int size) {
         Font font = new Font("Times New Roman", Font.PLAIN, size*getScale());
         return font;
@@ -137,12 +162,11 @@ public class GUI {
 
         //build film tab content
         makeFilmWest();
-        //getForestillingerTilFilm("Kagemanden og de syv små dværge");
         //makeFilmCenter();
 
         //build dag tab content
         makeDagWest();
-        //getDag("Mandag");
+        getDag("Mandag");
 
         tabbedPane.addTab("Film", filmPane);
         tabbedPane.addTab("Dag", dagPane);
