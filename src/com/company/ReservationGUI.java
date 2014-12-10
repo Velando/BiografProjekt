@@ -18,6 +18,7 @@ public class ReservationGUI {
     private String forestillingNavn;
     private String forestillingTid;
     private String forestillingDag;
+    private ArrayList<ArrayList<Integer>> toBeReserved = new ArrayList<ArrayList<Integer>>();
     private Forestilling f;
 
 
@@ -72,16 +73,16 @@ public class ReservationGUI {
 
     private void buildGrid() {
 
-        JPanel seatGrid = new JPanel(new GridLayout(10,10));
+        JPanel seatGrid = new JPanel(new GridLayout(f.getSalRækker(),f.getSalSæder()));
         seatGrid.setBorder(new EmptyBorder(12, 12, 12, 12));
 
         for(int i = 1; i < 11; i++) {
             for (int j = 1; j < 11; j++) {
 
-                final String row = Integer.toString(i);
-                final String seat = Integer.toString(j);
+                final int rowInt = i;
+                final int seatInt = j;
 
-                String btnName = row + seat;
+                String btnName = Integer.toString(rowInt)+ Integer.toString(seatInt);
 
                 final JButton btn = new JButton(btnName);
 
@@ -92,14 +93,12 @@ public class ReservationGUI {
                     btn.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            System.out.println("Pressed " + row + " " + seat);
-
-
-
                             if (btn.getBackground().equals(Color.GREEN)){
                                 btn.setBackground(Color.MAGENTA);
+                                toBeReserved(rowInt, seatInt);
                             } else {
                                 btn.setBackground(Color.GREEN);
+                                cancelReserved(rowInt, seatInt);
                             }
                         }
                     });
@@ -117,8 +116,29 @@ public class ReservationGUI {
     }
 
     private void toBeReserved(int row, int seat){
+        ArrayList<Integer> rowAndSeat = new ArrayList<Integer>();
 
+        rowAndSeat.add(row);
+        rowAndSeat.add(seat);
 
+        toBeReserved.add(rowAndSeat);
+        System.out.println(toBeReserved);
+    }
+
+    private void cancelReserved(int row, int seat) {
+
+        ArrayList<Integer> cancelReserved = new ArrayList<Integer>();
+        cancelReserved.add(row);
+        cancelReserved.add(seat);
+
+        for(ArrayList<Integer> intList : toBeReserved) {
+            if(intList.get(0).equals(cancelReserved.get(0))
+                    && intList.get(1).equals(cancelReserved.get(1))) {
+                toBeReserved.remove(intList);
+            }
+        }
+
+        System.out.println(toBeReserved);
     }
 
 

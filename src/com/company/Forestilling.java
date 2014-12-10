@@ -70,6 +70,14 @@ public class Forestilling {
         reservationer.add(res);
     }
 
+    public int getSalRækker(){
+        return sal.getRækker();
+    }
+
+    public int getSalSæder() {
+        return sal.getSæder();
+    }
+
 
     //useless?
     public ArrayList<Billet> getReservationer(){

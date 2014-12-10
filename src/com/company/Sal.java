@@ -39,4 +39,6 @@ public class Sal {
     public int getRækker(){
         return rækker;
     }
+
+    public int getSæder() {return sæder;}
 }
