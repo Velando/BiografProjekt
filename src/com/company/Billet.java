@@ -9,27 +9,29 @@ package com.company;
     //forestilling.
     //udivddelse: reservations_id og/eller telefonnummer, så vi kan tilgå reservationer via dem - bl.a. til
     //opdatering / rettelser i DB.
-public class Reservation {
+public class Billet {
     private int forestil_id;
+    private int res_id;
+    private int tlf_nr;
     private int række;
     private int sæde_nr;
 
-    public Reservation(int forestil_id, int række, int sæde_nr){
+    public Billet(int forestil_id, int res_id, int tlf_nr, int række, int sæde_nr){
         this.forestil_id = forestil_id;
+        this.res_id = res_id;
+        this.tlf_nr = tlf_nr;
         this.række = række;
         this.sæde_nr = sæde_nr;
     }
 
-    public int getForestil_id(){
-        return forestil_id;
-    }
+    public int getForestil_id(){return forestil_id;}
 
-    public int getRække(){
-        return række;
-    }
+    public int getRes_id(){return res_id;}
 
-    public int getSæde_nr(){
-        return sæde_nr;
-    }
+    public int getTlf_nr(){return tlf_nr;}
+
+    public int getRække(){return række;}
+
+    public int getSæde_nr(){return sæde_nr;}
 
 }

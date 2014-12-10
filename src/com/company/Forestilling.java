@@ -19,7 +19,7 @@ public class Forestilling {
 
     //test
     private Film film;
-    private ArrayList<Reservation> reservationer = new ArrayList<Reservation>();
+    private ArrayList<Billet> reservationer = new ArrayList<Billet>();
     private Sal sal = new Sal(1,10,10);
 
     public Forestilling(int forstil_id, int sal_nr, int film_id, String tid, String dag){
@@ -67,20 +67,20 @@ public class Forestilling {
         return forstil_id;
     }
 
-    public void setReservationer(Reservation res){
+    public void setReservationer(Billet res){
         reservationer.add(res);
     }
 
 
     //useless?
-    public ArrayList<Reservation> getReservationer(){
+    public ArrayList<Billet> getReservationer(){
         return reservationer;
     }
 
     public void lavReservationer(){
         reservationer123 = sal.getAlleSæder();
 
-        for(Reservation r: reservationer){
+        for(Billet r: reservationer){
             reservationer123[r.getRække()-1][r.getSæde_nr()-1] = true;
         }
     }
