@@ -15,6 +15,7 @@ public class Controller {
     private ArrayList<Billet> res = ordere.makeReservationer();
     private ArrayList<Film> film = ordere.makeFilm();
     private ArrayList<Forestilling> fore = ordere.makeForestillinger();
+    private ArrayList<Sal> sal = ordere.makeSale();
 
     public Controller(){
 
@@ -115,6 +116,15 @@ public class Controller {
                 if(re.getForestil_id() == fo.getForstil_id())
                     fo.setReservationer(re);
 
+
+
+        for(Forestilling fo: fore){
+            for(Sal s: sal){
+                if(fo.getSal_nr() == s.getSal_nr())
+                    fo.setSal(s);
+            }
+        }
+
         //Gennem lavReservationer() initialiseres et boolean[][] med antal rækker og sæder fra Sal klassen (vil altid
         //være 10x10 i vores tilfælde). Der itereres nu på alle reservationsobjekterne med et for each loop, der henter
         //række- og sædenr fra reservationsobjektet, og ændre boolean værdien i dobbeltarrayet til true på de
@@ -122,6 +132,7 @@ public class Controller {
         for(Forestilling fo: fore) {
             fo.lavReservationer();
         }
+
 
     }
 
