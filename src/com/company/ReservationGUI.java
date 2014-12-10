@@ -18,14 +18,15 @@ public class ReservationGUI {
     private String forestillingNavn;
     private String forestillingTid;
     private String forestillingDag;
+    private Forestilling f;
 
 
-    public ReservationGUI(String navn, String dag, String tid) {
+    public ReservationGUI(Forestilling f) {
 
-        this.forestillingNavn = navn;
-        this.forestillingTid = tid;
-        this.forestillingDag = dag;
-
+        forestillingNavn = f.getFilmNavn();
+        forestillingTid = f.getTid();
+        forestillingDag = f.getDag();
+        this.f = f;
         makeFrame();
     }
 
@@ -83,19 +84,27 @@ public class ReservationGUI {
                 String btnName = row + seat;
 
                 final JButton btn = new JButton(btnName);
-                btn.setBackground(Color.GREEN);
-                btn.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println("Pressed " + row + " " + seat);
-                        //makeReservation(forestilling, row, seat);
-                        if (btn.getBackground().equals(Color.GREEN)){
-                            btn.setBackground(Color.MAGENTA);
-                        } else {
-                            btn.setBackground(Color.GREEN);
+
+                if(f.getResSæder()[i-1][j-1]) {
+                    btn.setBackground(Color.RED);
+                } else {
+                    btn.setBackground(Color.GREEN);
+                    btn.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Pressed " + row + " " + seat);
+
+
+
+                            if (btn.getBackground().equals(Color.GREEN)){
+                                btn.setBackground(Color.MAGENTA);
+                            } else {
+                                btn.setBackground(Color.GREEN);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
                 JPanel flow = new JPanel();
                 flow.add(btn);
                 seatGrid.add(flow);

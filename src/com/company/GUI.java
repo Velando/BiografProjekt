@@ -65,7 +65,7 @@ public class GUI {
             btn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new ReservationGUI(filmNavn, filmDag, filmTid);
+                    new ReservationGUI(controller.getForestilling(filmNavn, filmDag, filmTid));
                 }
             });
             centerGrid.add(btn);
@@ -127,7 +127,7 @@ public class GUI {
             btn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new ReservationGUI(filmNavn, filmDag, filmTid);
+                    new ReservationGUI(controller.getForestilling(filmNavn, filmDag, filmTid));
                 }
             });
             centerGrid.add(btn);

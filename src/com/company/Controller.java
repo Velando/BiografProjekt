@@ -66,6 +66,26 @@ public class Controller {
         return filmName;
     }
 
+    //returnerer et forestillings objekt udfra navn, visningsdag og visningstid
+    public Forestilling getForestilling(String navn, String dag, String tid) {
+
+        Forestilling toBeReturned = null;
+        for(Forestilling f : fore) {
+
+            if(navn.equals((f.getFilmNavn())) && dag.equals(f.getDag()) && tid.equals(f.getTid())) {
+                toBeReturned = f;
+                break;
+            } else {
+                toBeReturned = null;
+            }
+
+            if(toBeReturned != null) {
+                break;
+            }
+        }
+        return toBeReturned;
+    }
+
 
 
 
