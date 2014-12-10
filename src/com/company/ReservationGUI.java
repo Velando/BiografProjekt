@@ -65,7 +65,7 @@ public class ReservationGUI {
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
-                            btn.setBackground(Color.BLUE);
+                            btn.setBackground(Color.cyan);
                             //makeReservation(forestilling, tlf_nr, row, seat);
                         }
                     });
@@ -86,7 +86,7 @@ public class ReservationGUI {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
-                        btn.setBackground(Color.BLUE);
+                        btn.setBackground(Color.cyan);
                         //makeReservation(forestilling, tlf_nr, row, seat);
                     }
                 });
@@ -127,7 +127,7 @@ public class ReservationGUI {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
-                        btn.setBackground(Color.BLUE);
+                        btn.setBackground(Color.cyan);
                         //makeReservation(forestilling, tlf_nr, row, seat);
                     }
                 });
