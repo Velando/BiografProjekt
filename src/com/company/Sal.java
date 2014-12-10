@@ -11,28 +11,26 @@ public class Sal {
     private int sal_nr;
     private int rækker;
     private int sæder;
-    private boolean[][] alleSæder; // arraylists i stedet?
+     // arraylists i stedet?
 
     public Sal(int sal_nr, int rækker, int sæder){
         this.sal_nr = sal_nr;
         this.rækker = rækker;
         this.sæder = sæder;
-        lavSæder();
     }
 
-    private void lavSæder(){ //skal udvides med reservationer
-        alleSæder = new boolean[rækker][sæder];
+    public boolean[][] lavSæder(boolean[][] sal){ //skal udvides med reservationer
+        sal = new boolean[rækker][sæder];
 
-        for(boolean[] ba: alleSæder){
+        for(boolean[] ba: sal){
             for(boolean b: ba){
                 b = false;
             }
         }
+        return sal;
     }
 
-    public boolean[][] getAlleSæder(){
-        return alleSæder;
-    }
+
 
     public int getSal_nr(){
         return sal_nr;

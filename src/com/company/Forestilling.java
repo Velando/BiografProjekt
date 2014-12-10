@@ -77,7 +77,7 @@ public class Forestilling {
     }
 
     public void lavReservationer(){
-        salSize = sal.getAlleSæder();
+        salSize = sal.lavSæder(salSize);
 
         for(Billet r: reservationer){
             salSize[r.getRække()-1][r.getSæde_nr()-1] = true;
