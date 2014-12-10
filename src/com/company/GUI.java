@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class GUI {
     private JFrame frame = new JFrame("Biograf GUI");
     private JPanel contentPane = (JPanel) frame.getContentPane();
-    private JPanel filmPane = new JPanel(new BorderLayout(6,6));
-    private JPanel dagPane = new JPanel(new BorderLayout(6,6));
+    private JPanel filmPane = new JPanel(new BorderLayout(6*getScale(),6*getScale()));
+    private JPanel dagPane = new JPanel(new BorderLayout(6*getScale(),6*getScale()));
     private JPanel centerGrid = new JPanel(new GridLayout(0,3));
     private JTabbedPane tabbedPane = new JTabbedPane();
 
@@ -35,7 +35,7 @@ public class GUI {
         for (String[] strings : l) {
             String s = strings[1] + " " + strings[2];
             JButton j = new JButton(s);
-            j.setFont(getFont());
+            j.setFont(getFont(8));
             centerGrid.add(j);
         }
 
@@ -51,8 +51,10 @@ public class GUI {
         centerGrid.removeAll();
 
         for (String[] strings : l) {
-          String s = strings[0]+ "  " + strings[2];
-          centerGrid.add(new JButton(s));
+            String s = strings[0]+ "  " + strings[2];
+            JButton j = new JButton(s);
+            j.setFont(getFont(8));
+            centerGrid.add(j);
         }
 
         dagPane.add(centerGrid, BorderLayout.CENTER);
@@ -73,11 +75,10 @@ public class GUI {
                 public void actionPerformed(ActionEvent e) {
                     getForestillingerTilFilm(s);}
             });
-            j.setFont(getFont());
+            j.setFont(getFont(10));
             westGrid.add(j);
         }
 
-        westGrid.setFont(getFont());
         JPanel flow = new JPanel();
         flow.add(westGrid);
         flow.setBorder(new LineBorder(Color.BLACK));
@@ -88,50 +89,25 @@ public class GUI {
     private void makeDagWest() {
         JPanel westGrid = new JPanel(new GridLayout(0,1));
 
-        JButton mandag = new JButton("Mandag");
-        mandag.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                getDag("Mandag");}
-        });
-        JButton tirsdag = new JButton("Tirsdag");
-        tirsdag.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {getDag("Tirsdag");}
-        });
-        JButton onsdag = new JButton("Onsdag");
-        onsdag.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {getDag("Onsdag");}
-        });
-        JButton torsdag = new JButton("Torsdag");
-        torsdag.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {getDag("Torsdag");}
-        });
-        JButton fredag = new JButton("Fredag");
-        fredag.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {getDag("Fredag");}
-        });
-        JButton lørdag = new JButton("Lørdag");
-        lørdag.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {getDag("Lørdag");}
-        });
-        JButton søndag = new JButton("Søndag");
-        søndag.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {getDag("Søndag");}
-        });
+        ArrayList<String> dage = new ArrayList<String>();
+        dage.add("Mandag");
+        dage.add("Tirsdag");
+        dage.add("Onsdag");
+        dage.add("Torsdag");
+        dage.add("Fredag");
+        dage.add("Lørdag");
+        dage.add("Søndag");
 
-        westGrid.add(mandag);
-        westGrid.add(tirsdag);
-        westGrid.add(onsdag);
-        westGrid.add(torsdag);
-        westGrid.add(fredag);
-        westGrid.add(lørdag);
-        westGrid.add(søndag);
+        for(final String s: dage){
+            JButton j = new JButton(s);
+            j.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    getDag(s);}
+            });
+            j.setFont(getFont(10));
+            westGrid.add(j);
+        }
 
         JPanel flow = new JPanel();
         flow.add(westGrid);
@@ -140,8 +116,8 @@ public class GUI {
         dagPane.add(flow, BorderLayout.WEST);
     }
 
-    private Font getFont() {
-        Font font = new Font("Times New Roman", Font.PLAIN, 10*getScale());
+    private Font getFont(int size) {
+        Font font = new Font("Times New Roman", Font.PLAIN, size*getScale());
         return font;
     }
 
@@ -154,33 +130,34 @@ public class GUI {
     private void makeFrame(){
 
         //some spacing
-        filmPane.setBorder(new EmptyBorder(12, 12, 12, 12));
-        filmPane.setLayout(new BorderLayout(6, 6));
-        dagPane.setBorder(new EmptyBorder(12, 12, 12, 12));
-        dagPane.setLayout(new BorderLayout(6, 6));
+        filmPane.setBorder(new EmptyBorder(12*getScale(), 12*getScale(), 12*getScale(), 12*getScale()));
+        filmPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
+        dagPane.setBorder(new EmptyBorder(12*getScale(), 12*getScale(), 12*getScale(), 12*getScale()));
+        dagPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
 
         //build film tab content
         makeFilmWest();
+        //getForestillingerTilFilm("Kagemanden og de syv små dværge");
         //makeFilmCenter();
 
         //build dag tab content
         makeDagWest();
-        getDag("Mandag");
+        //getDag("Mandag");
 
         tabbedPane.addTab("Film", filmPane);
         tabbedPane.addTab("Dag", dagPane);
-        tabbedPane.setFont(getFont());
+        tabbedPane.setFont(getFont(12));
 
         contentPane.add(tabbedPane);
 
         //building is done - arrange the components7
-        frame.setFont(getFont());
+        frame.setFont(getFont(12));
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(480 * getScale(), 320 * getScale());
+        frame.setSize(800 * getScale(), 400 * getScale());
         frame.setLocation(d.width/2 - frame.getWidth()/2, d.height/2 - frame.getHeight()/2);
 
         frame.setVisible(true);

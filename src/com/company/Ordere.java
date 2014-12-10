@@ -111,7 +111,6 @@ public class Ordere {
         return forestillings_list;
     }
 
-
     // heri inputter man dag aka mandag tirsdag...
     public ArrayList<String[]> downloadForestillingerBestemtDag(String dag){
         ArrayList<String[]> forestillings_list = new ArrayList<String[]>();
@@ -227,8 +226,6 @@ public class Ordere {
 
     //Nedenstående metoder bliver brugt til at oprette klasser. download() henter, make() opretter (kaldes i controller).
 
-
-
     public ArrayList<ArrayList<String>> downloadForestillingTest(){
         ArrayList<ArrayList<String>> forestillinger = new ArrayList<ArrayList<String>>();
 
@@ -322,7 +319,6 @@ public class Ordere {
         }
         return film;
     }
-
 
     public ArrayList<ArrayList<Integer>> downloadBilletTest(){
         ArrayList<ArrayList<Integer>> reservationer = new ArrayList<ArrayList<Integer>>();
