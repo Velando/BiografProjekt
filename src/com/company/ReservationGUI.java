@@ -5,6 +5,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by Jonas on 07-12-2014.
@@ -42,30 +43,102 @@ public class ReservationGUI {
     private void buildGrid() {
 
         JPanel seatGrid = new JPanel(new GridLayout(10,10));
-        seatGrid.setBorder(new EmptyBorder(12,12,12,12));
+        seatGrid.setBorder(new EmptyBorder(12, 12, 12, 12));
 
-        for(int i = 1; i < 11; i++) {
-            for (int j = 1; j < 11; j++) {
+        Ordere o = new Ordere();
 
+        ArrayList<Boolean> seats = o.downloadSeatsForforestilling(1);
+
+        int i = 1;
+        int j = 1;
+
+        for (Boolean sæde : seats) {
+            if(sæde == null){
+                for (int j_o = j ;j_o < 11; j_o++) {
+                    final int row = i;
+                    final int seat = j_o;
+
+                    String btnName = Integer.toString(i) + " " + Integer.toString(j_o);
+                    final JButton btn = new JButton(btnName);
+                    btn.setBackground(Color.GREEN);
+                    btn.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
+                            btn.setBackground(Color.BLUE);
+                            //makeReservation(forestilling, tlf_nr, row, seat);
+                        }
+                    });
+                    JPanel flow = new JPanel();
+                    flow.add(btn);
+                    seatGrid.add(flow);
+                }
+                i++;
+                j = 1;
+            }else if (sæde == false){
                 final int row = i;
                 final int seat = j;
 
-                String btnName = Integer.toString(i) + Integer.toString(j);
-
-                JButton btn = new JButton(btnName);
+                String btnName = Integer.toString(i) + " " + Integer.toString(j);
+                final JButton btn = new JButton(btnName);
                 btn.setBackground(Color.GREEN);
                 btn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
-                        //makeReservation(forestilling, row, seat);
+                        btn.setBackground(Color.BLUE);
+                        //makeReservation(forestilling, tlf_nr, row, seat);
+                    }
+                });
+                JPanel flow = new JPanel();
+                flow.add(btn);
+                seatGrid.add(flow);
+                j++;
+            }else{
+                final int row = i;
+                final int seat = j;
+
+                String btnName = Integer.toString(i) + " " + Integer.toString(j);
+                final JButton btn = new JButton(btnName);
+                btn.setBackground(Color.RED);
+                btn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
+                        //makeReservation(forestilling, tlf_nr, row, seat);
+                    }
+                });
+                JPanel flow = new JPanel();
+                flow.add(btn);
+                seatGrid.add(flow);
+                j++;
+            }
+        }
+
+        while (i < 11){
+            for (int j_o = j ;j_o < 11; j_o++) {
+                final int row = i;
+                final int seat = j_o;
+
+                String btnName = Integer.toString(i) + " " + Integer.toString(j_o);
+                final JButton btn = new JButton(btnName);
+                btn.setBackground(Color.GREEN);
+                btn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Pressed " + Integer.toString(row) + " " + Integer.toString(seat));
+                        btn.setBackground(Color.BLUE);
+                        //makeReservation(forestilling, tlf_nr, row, seat);
                     }
                 });
                 JPanel flow = new JPanel();
                 flow.add(btn);
                 seatGrid.add(flow);
             }
+            i++;
+            j = 1;
         }
+
 
         reservationPane.add(seatGrid, BorderLayout.CENTER);
 
