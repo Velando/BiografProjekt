@@ -33,6 +33,7 @@ public class ReservationGUI {
         makeFrame();
     }
 
+    //diverse labels i toppen af vinduet
     private void buildNorth() {
 
         String dagTid = forestillingDag + " " + forestillingTid;
@@ -47,48 +48,43 @@ public class ReservationGUI {
         //reservationPane.add(forestillingDagTid, BorderLayout.NORTH);
     }
 
+
     private void buildSouth() {
 
         JPanel border = new JPanel(new BorderLayout(4,4));
-        JPanel box = new JPanel();
-        box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
         JPanel flow = new JPanel();
 
-        //final JTextField tlfInput = new JTextField(8);
-        JLabel tlfNr = new JLabel("Indtast Telefonnummer");
-
-        flow.add(tlfNr);
-        //box.add(tlfInput);
-
         JButton reserve = new JButton("Reservér");
-        //reservér knappen indleder reservationen af alle markerede
-        //sæder til det indtastede telefonnummer. Telefonnummeret
-        //tjekkes for at bestå af 8 og kun 8 tal
+        //reservér knappen laver et inputDialog vindue når den bliver
+        //trykket på, der beder brugeren om et telefonnummer som input.
         reserve.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //String tlfNr = tlfInput.getText();
 
-                if(toBeReserved.equals("")) {
+                //tjekker at der er blevet valgt sæder til reservation
+                if(toBeReserved.size() == 0) {
                     JOptionPane.showMessageDialog(frame, "Vælg pladser der skal reserveres!");
                     return;
                 }
 
-                String dialogResult = (String)JOptionPane.showInputDialog(
+                String dialogInput = (String)JOptionPane.showInputDialog(
                         frame,
                         "Indtast telefonnummer og bekræft reservationen",
-                        "Bekræft reservation",
+                        "Fuldfør Reservation",
                         JOptionPane.PLAIN_MESSAGE,
                         null,
                         null,
                         "Indtast telfonnummer");
 
-                if(dialogResult != null) {
-                    if (dialogResult.length() != 8 || !isNumeric(dialogResult)) {
+                //Tjekker input for at bestå af netop 8 tal (dansk telefonnummer)
+                if(dialogInput != null) {
+                    if (dialogInput.length() != 8 || !isNumeric(dialogInput)) {
                         JOptionPane.showMessageDialog(frame, "Telefonnummeret skal bestå af præcist 8 tal");
                     } else {
                         //input er tjekket, bekræft reservationer
-                        makeReservation(dialogResult);
+                        makeReservation(dialogInput);
+
+                        //frame.dispose();
                     }
                 }
             }
@@ -101,7 +97,6 @@ public class ReservationGUI {
             }
         });
 
-        flow.add(box);
         flow.add(reserve);
         flow.add(annuller);
 
@@ -111,8 +106,11 @@ public class ReservationGUI {
     }
 
     //fylder et gridlayout der har størrelse svarende til forestillingens
-    //sal med røde eller grøne knapper alt efter om et givent sæde er
-    //reserveret eller ej
+    //sal med røde eller grønne knapper alt efter om et givent sæde er
+    //reserveret eller ej. Hvert sæde lytter efter om det bliver klikket på,
+    //og skifter farve til magenta hvis dette sker, og tilføjer række- og
+    //sædenummer til listen toBeReserved. Hvis en magenta knap trykkes på,
+    //skifter den farve til grøn og fjerner sig selv fra toBeReserved
     private void buildGrid() {
 
         JPanel seatGrid = new JPanel(new GridLayout(f.getSalRækker(),f.getSalSæder()));
@@ -145,7 +143,6 @@ public class ReservationGUI {
                         }
                     });
                 }
-
                 JPanel flow = new JPanel();
                 flow.add(btn);
                 seatGrid.add(flow);
@@ -204,6 +201,7 @@ public class ReservationGUI {
         return true;
     }
 
+    //Klargører den nødvendige information til reservation af billetter
     private void makeReservation(String telefonNr) {
         System.out.println(telefonNr);
         System.out.println(toBeReserved);
