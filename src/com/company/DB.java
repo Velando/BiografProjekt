@@ -125,8 +125,8 @@ public class DB {
         return listToBeReturned;
     }
 
-    public void sqlCommandInsertInto(String v1, int v2, ArrayList<ArrayList<Integer>> v3){
-        String res_id;
+    public String sqlCommandInsertInto(String v1, int v2, ArrayList<ArrayList<Integer>> v3){
+        String res_id = "";
         openConnection();
         try {
             String sql = "INSERT INTO Reservation(tlf_nr) VALUES(" + v1 +")";
@@ -156,6 +156,7 @@ public class DB {
         } catch (Exception e){
             e.printStackTrace(); // handle errors
         }
+        return res_id;
     }
 
 }

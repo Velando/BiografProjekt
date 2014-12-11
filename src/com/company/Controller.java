@@ -142,11 +142,17 @@ public class Controller {
     }
 
     //til nye reservationer
-    /*public void newReservation(){
-        Billet temp = new Billet(); // udfyld senere
-        res.add(temp);
-        fore.get(forestilling_id).setReservationer(temp); //udfyld senere
-
-    }*/
+    public void newReservation(int forestil_id, int res_id, int tlf_nr, ArrayList<ArrayList<Integer>> rs){
+        int række;
+        int sæde;
+        for(ArrayList<Integer> l: rs){
+            række = l.get(0);
+            sæde = l.get(1);
+            Billet temp = new Billet(forestil_id, res_id, tlf_nr, række, sæde);
+            res.add(temp);
+            fore.get(forestil_id).setReservationer(temp);
+            init();
+        }
+    }
 
 }
