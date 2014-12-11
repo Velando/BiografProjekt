@@ -159,5 +159,17 @@ public class DB {
         return res_id;
     }
 
+    public void sqlCommandDeleteReservation(String tlf_nr){
+        openConnection();
+        try {
+            String sql = "DELETE FROM Reservation WHERE tlf_nr =(" + tlf_nr +")";
+            statement.executeUpdate(sql);
+            closeConnection();
+
+        } catch (Exception e){
+            e.printStackTrace(); // handle errors
+        }
+    }
+
 }
 

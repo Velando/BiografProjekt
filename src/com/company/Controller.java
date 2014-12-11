@@ -135,10 +135,6 @@ public class Controller {
         for (Forestilling fo : fore) {
             fo.lavReservationer();
         }
-
-        //db.sqlCommandInsertInto("27289215", 12, 3, 3);
-
-
     }
 
     //til nye reservationer

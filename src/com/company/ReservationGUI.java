@@ -209,7 +209,9 @@ public class ReservationGUI {
         System.out.println(toBeReserved);
         System.out.println(f.getForstil_id());
 
-        gui.getController().getDb().sqlCommandInsertInto(telefonNr, f.getForstil_id(), toBeReserved);
+        //udkommenteret metode køres som argument i den anden (returnerer res_id som string, lidt rodet). Der gemmes
+        //reserveres derfor dobbelt hvis begge kaldes.
+        //gui.getController().getDb().sqlCommandInsertInto(telefonNr, f.getForstil_id(), toBeReserved);
         gui.getController().newReservation(f.getForstil_id(), Integer.parseInt(gui.getController().getDb().sqlCommandInsertInto(telefonNr, f.getForstil_id(), toBeReserved)), Integer.parseInt(telefonNr), toBeReserved);
     }
 
