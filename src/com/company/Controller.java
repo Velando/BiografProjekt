@@ -59,6 +59,48 @@ public class Controller {
         return filmTidList;
     }
 
+    //Hent en forestillings visningsdag ud fra et film_id
+    public String getForestillingsDag(int film_id) {
+
+        String dag = null;
+
+        for(Forestilling f : fore){
+
+            if(f.getFilm_id() == film_id){
+                dag = f.getDag();
+            }
+        }
+        return dag;
+    }
+
+    //Hent en forestillings visningstidspunkt ud fra et film_id
+    public String getForestillingsTid(int film_id ) {
+
+        String tid = null;
+
+        for(Forestilling f : fore){
+
+            if(f.getFilm_id() == film_id){
+                tid = f.getTid();
+            }
+        }
+        return tid;
+    }
+
+    //Hent en forestillings filmtitel ud fra et film_id
+    public String getForestillingsNavn(int film_id ) {
+
+        String film = null;
+
+        for(Forestilling f : fore){
+
+            if(f.getFilm_id() == film_id){
+                film = f.getFilmNavn();
+            }
+        }
+        return film;
+    }
+
     public ArrayList<String> getFilms(){
         ArrayList<String> listToBeReturned = new ArrayList<String>();
 
@@ -148,6 +190,24 @@ public class Controller {
             res.add(temp);
             fore.get(forestil_id).setReservationer(temp);
             init();
+        }
+    }
+
+    public void sletReservationer(String tlfNr) {
+
+        ArrayList<Billet> toBeRemoved = new ArrayList<Billet>();
+
+        db.sqlCommandDeleteReservation(tlfNr);
+        for(Billet billet : res) {
+
+            if(Integer.toString(billet.getTlf_nr()).equals(tlfNr)) {
+
+                toBeRemoved.add(billet);
+            }
+        }
+
+        for(Billet b : toBeRemoved) {
+            res.remove(b);
         }
     }
 

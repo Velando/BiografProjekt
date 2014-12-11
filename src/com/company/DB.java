@@ -147,7 +147,7 @@ public class DB {
                 String sql2 = "INSERT INTO Billet(res_id, forestil_id, række, sæde_nr) VALUES ("+ res_id + ", " + v2 +", " + række +", " + sæde +")";
                 statement.executeUpdate(sql2);
 
-                System.out.println("Reservation set: " + v1 + " : " + v2 + " : " + række + " " + sæde);
+                //System.out.println("Reservation set: " + v1 + " : " + v2 + " : " + række + " " + sæde);
             }
 
             rs.close();

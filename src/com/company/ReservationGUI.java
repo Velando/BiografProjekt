@@ -50,7 +50,7 @@ public class ReservationGUI {
         //reservationPane.add(forestillingDagTid, BorderLayout.NORTH);
     }
 
-
+    //knapper, reservér og annullér, i bunden af vinduet
     private void buildSouth() {
 
         JPanel border = new JPanel(new BorderLayout(4,4));
@@ -69,6 +69,7 @@ public class ReservationGUI {
                     return;
                 }
 
+                //laver dialog vinduet til at tage input fra brugeren
                 String dialogInput = (String)JOptionPane.showInputDialog(
                         frame,
                         "Indtast telefonnummer og bekræft reservationen",
@@ -85,12 +86,15 @@ public class ReservationGUI {
                     } else {
                         //input er tjekket, bekræft reservationer
                         makeReservation(dialogInput);
-
-                        //frame.dispose();
+                        System.out.println("Reservation: Done!");
+                        JOptionPane.showMessageDialog(frame, "Reservation sat!");
+                        frame.dispose();
                     }
                 }
             }
         });
+
+        //annullér knappen lukker reservationsvinduet uden at lave nogen reservationer
         JButton annuller = new JButton("Annullér");
         annuller.addActionListener(new ActionListener() {
             @Override
@@ -203,7 +207,8 @@ public class ReservationGUI {
         return true;
     }
 
-    //Klargører den nødvendige information til reservation af billetter
+    //meget, meget grim løsning DansGame
+    //
     public void makeReservation(String telefonNr) {
         System.out.println(telefonNr);
         System.out.println(toBeReserved);
