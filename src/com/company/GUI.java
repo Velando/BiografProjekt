@@ -25,7 +25,7 @@ public class GUI {
         JPanel westGrid = new JPanel(new GridLayout(0,1));
 
         //get some ArrayList with movie names
-        ArrayList<String> l = controller.downloadFilms();
+        ArrayList<String> l = controller.getFilms();
 
         for(final String s: l){
             JButton j = new JButton(s);

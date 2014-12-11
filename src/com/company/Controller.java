@@ -59,12 +59,14 @@ public class Controller {
         return filmTidList;
     }
 
-    public ArrayList<String> downloadFilms(){
-        // her kan vi direkte hente alle film navnene
-        db.openConnection();
-        ArrayList<String> filmName = db.sqlCommandSelectFromGetString("navn", "Film");
-        db.closeConnection();
-        return filmName;
+    public ArrayList<String> getFilms(){
+        ArrayList<String> listToBeReturned = new ArrayList<String>();
+
+        for(Film f: film){
+            listToBeReturned.add(f.getFilm_navn());
+
+        }
+        return listToBeReturned;
     }
 
     //returnerer et forestillings objekt udfra navn, visningsdag og visningstid
