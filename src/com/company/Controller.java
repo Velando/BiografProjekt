@@ -89,7 +89,9 @@ public class Controller {
         return toBeReturned;
     }
 
-
+    public DB getDb(){
+        return db;
+    }
 
 
 

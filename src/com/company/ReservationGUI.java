@@ -22,14 +22,16 @@ public class ReservationGUI {
     private String forestillingDag;
     private ArrayList<ArrayList<Integer>> toBeReserved = new ArrayList<ArrayList<Integer>>();
     private Forestilling f;
+    private GUI gui;
 
 
-    public ReservationGUI(Forestilling f) {
+    public ReservationGUI(Forestilling f, GUI parent) {
 
         forestillingNavn = f.getFilmNavn();
         forestillingTid = f.getTid();
         forestillingDag = f.getDag();
         this.f = f;
+        this.gui = parent;
         makeFrame();
     }
 
@@ -167,7 +169,7 @@ public class ReservationGUI {
         System.out.println(toBeReserved);
     }
 
-    //annullere et markeret sæde, så det ikke længere er i
+    //annullerer et markeret sæde, så det ikke længere er i
     //toBeReserved listen.
     //Der itereres over den nuværende toBeReserved liste
     //indtil der bliver fundet en ArrayList<Integer> med samme
@@ -202,10 +204,12 @@ public class ReservationGUI {
     }
 
     //Klargører den nødvendige information til reservation af billetter
-    private void makeReservation(String telefonNr) {
+    public void makeReservation(String telefonNr) {
         System.out.println(telefonNr);
         System.out.println(toBeReserved);
-        System.out.println(f.getFilm_id());
+        System.out.println(f.getForstil_id());
+
+        gui.getController().getDb().sqlCommandInsertInto(telefonNr, f.getForstil_id(), toBeReserved);
     }
 
 

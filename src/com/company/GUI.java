@@ -18,6 +18,7 @@ public class GUI {
     private JPanel centerGrid = new JPanel(new GridLayout(0,3));
     private JTabbedPane tabbedPane = new JTabbedPane();
     private Controller controller = new Controller();
+    private final GUI gui = this;
 
     public GUI() {makeFrame();}
 
@@ -65,7 +66,7 @@ public class GUI {
             btn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new ReservationGUI(controller.getForestilling(filmNavn, filmDag, filmTid));
+                    new ReservationGUI(controller.getForestilling(filmNavn, filmDag, filmTid), gui);
                 }
             });
             centerGrid.add(btn);
@@ -127,7 +128,7 @@ public class GUI {
             btn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new ReservationGUI(controller.getForestilling(filmNavn, filmDag, filmTid));
+                    new ReservationGUI(controller.getForestilling(filmNavn, filmDag, filmTid), gui);
                 }
             });
             centerGrid.add(btn);
@@ -150,6 +151,10 @@ public class GUI {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
         return d.width/900;
+    }
+
+    public Controller getController() {
+        return controller;
     }
 
     private void makeFrame(){

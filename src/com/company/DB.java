@@ -141,15 +141,16 @@ public class DB {
             int sæde;
             int række;
 
-            for(int j = 0; j < v3.get(0).size(); j++){
-                sæde = v3.get(0).get(j);
-                række = v3.get(1).get(j);
-                String sql2 = "INSERT INTO Billet(res_id, forestil_id, række, sæde_nr) VALUES ("+ res_id + ", " + v2 +", " + sæde +", " + række +")";
+            for(ArrayList<Integer> list : v3){
+                række = list.get(0);
+                sæde = list.get(1);
+                String sql2 = "INSERT INTO Billet(res_id, forestil_id, række, sæde_nr) VALUES ("+ res_id + ", " + v2 +", " + række +", " + sæde +")";
                 statement.executeUpdate(sql2);
 
-                rs.close();
+                System.out.println("Reservation set: " + v1 + " : " + v2 + " : " + række + " " + sæde);
             }
 
+            rs.close();
             closeConnection();
 
         } catch (Exception e){
