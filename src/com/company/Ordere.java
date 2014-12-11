@@ -118,20 +118,25 @@ public class Ordere {
         ArrayList<Integer> forestil_id = db.sqlCommandSelectFromGetInt("forestil_id","Billet");
         ArrayList<Integer> res_id = db.sqlCommandSelectFromGetInt("res_id","Billet");
 
+        ArrayList<Integer> res_id2 = db.sqlCommandSelectFromGetInt("res_id", "Reservation");
         ArrayList<Integer> tlf_nr = db.sqlCommandSelectFromGetInt("tlf_nr","Reservation");
 
         ArrayList<Integer> række = db.sqlCommandSelectFromGetInt("række", "Billet");
         ArrayList<Integer> sæde = db.sqlCommandSelectFromGetInt("sæde_nr", "Billet");
+
 
         db.closeConnection();
 
         reservationer.add(forestil_id);
         reservationer.add(res_id);
 
+
         ArrayList billet_tlf_nr = new ArrayList<Integer>();
-        for (Integer integer : res_id) {
-            billet_tlf_nr.add(tlf_nr.get(integer - 1));
-        }
+        for(int i = 0; i < res_id.size(); i++)
+            for(int j = 0; j < res_id2.size(); j++)
+                if(res_id.get(i) == res_id2.get(j))
+                    billet_tlf_nr.add(tlf_nr.get(j));
+
 
         reservationer.add(billet_tlf_nr);
         reservationer.add(række);

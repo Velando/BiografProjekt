@@ -125,5 +125,37 @@ public class DB {
         return listToBeReturned;
     }
 
+    public void sqlCommandInsertInto(String v1, int v2, ArrayList<ArrayList<Integer>> v3){
+        String res_id;
+        openConnection();
+        try {
+            String sql = "INSERT INTO Reservation(tlf_nr) VALUES(" + v1 +")";
+            statement.executeUpdate(sql);
+
+            String sql1 = "SELECT res_id FROM Reservation WHERE tlf_nr = " + v1;
+            ResultSet rs = statement.executeQuery(sql1);
+            rs.next();
+            res_id = rs.getString("res_id");
+
+
+            int sæde;
+            int række;
+
+            for(int j = 0; j < v3.get(0).size(); j++){
+                sæde = v3.get(0).get(j);
+                række = v3.get(1).get(j);
+                String sql2 = "INSERT INTO Billet(res_id, forestil_id, række, sæde_nr) VALUES ("+ res_id + ", " + v2 +", " + sæde +", " + række +")";
+                statement.executeUpdate(sql2);
+
+                rs.close();
+            }
+
+            closeConnection();
+
+        } catch (Exception e){
+            e.printStackTrace(); // handle errors
+        }
+    }
+
 }
 

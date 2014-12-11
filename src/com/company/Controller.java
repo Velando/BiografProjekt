@@ -99,30 +99,29 @@ public class Controller {
 
     // opretter film-, reservations- og forestillingsobjeker, samt tilknytter film og reservationer til forestilling.
     // omdøbes på senere tidspunkt.
-    private void init(){
+    private void init() {
 
 
         //Film_id sammenlignes for alle forestillings- og filmobjekter, således at vi kan tilknytte et filmobjekt
         //til et forestillingsobjekt, så denne får relevante felter (relevant: navn på film)
-        for(Forestilling fo: fore)
-            for(Film fi: film)
-                if(fi.getFilm_id() == fo.getFilm_id())
+        for (Forestilling fo : fore)
+            for (Film fi : film)
+                if (fi.getFilm_id() == fo.getFilm_id())
                     fo.setFilm(fi);
 
 
         //Forestillings id sammenlignes for alle reservations- og forestillingsobjekter, således at vi kan tilknytte et
         //reservationsobjekt til et forestillingsobjekt, så denne får relevante felter (relevant: række- og sædenr)
         //De "matchende" reservationsobjekter samles i en ArrayListe i forestillingsobjektet til senere brug.
-        for(Forestilling fo: fore)
-            for(Billet re: res)
-                if(re.getForestil_id() == fo.getForstil_id())
+        for (Forestilling fo : fore)
+            for (Billet re : res)
+                if (re.getForestil_id() == fo.getForstil_id())
                     fo.setReservationer(re);
 
 
-
-        for(Forestilling fo: fore){
-            for(Sal s: sal){
-                if(fo.getSal_nr() == s.getSal_nr())
+        for (Forestilling fo : fore) {
+            for (Sal s : sal) {
+                if (fo.getSal_nr() == s.getSal_nr())
                     fo.setSal(s);
             }
         }
@@ -131,11 +130,21 @@ public class Controller {
         //være 10x10 i vores tilfælde). Der itereres nu på alle reservationsobjekterne med et for each loop, der henter
         //række- og sædenr fra reservationsobjektet, og ændre boolean værdien i dobbeltarrayet til true på de
         //pågældende pladser. Altså ved vi nu, hvor der er lavet reservationer.
-        for(Forestilling fo: fore) {
+        for (Forestilling fo : fore) {
             fo.lavReservationer();
         }
 
+        //db.sqlCommandInsertInto("27289215", 12, 3, 3);
+
 
     }
+
+    //til nye reservationer
+    /*public void newReservation(){
+        Billet temp = new Billet(); // udfyld senere
+        res.add(temp);
+        fore.get(forestilling_id).setReservationer(temp); //udfyld senere
+
+    }*/
 
 }

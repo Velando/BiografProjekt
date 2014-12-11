@@ -1,7 +1,6 @@
 package com.company.tests;
 
 import com.company.Money;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,7 +24,7 @@ public class MoneyTest {
         // denne køre efter hver test
     }
 
-    @Ignore
+
     @Test
     public void createMoney(){
         Assert.assertEquals(100,m1.getAmount());
