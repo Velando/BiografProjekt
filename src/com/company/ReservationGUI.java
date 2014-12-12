@@ -233,7 +233,7 @@ public class ReservationGUI {
     private int getScale() {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
-        return d.width/1200;
+        return d.width/900;
     }
 
 

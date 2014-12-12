@@ -40,15 +40,22 @@ public class ForestillingTest {
 
     @Test
     public void forestillingFilmInput(){
+
+        //her kan der bruges mocking objecter
         Film film = new Film(2,"Kagemand");
+
         f1.setFilm(film);
         Assert.assertEquals("Kagemand",f1.getFilmNavn());
     }
 
     @Test
     public void forestillingBilletInput(){
+
+        //her kan der buges mocking objecter
         Billet billet = new Billet(1,1,10000000,1,1);
         Sal sal = new Sal(1,10,10);
+
+
         f1.setSal(sal);
         f1.setReservationer(billet);
         f1.lavReservationer();
