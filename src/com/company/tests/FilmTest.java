@@ -1,12 +1,8 @@
-/**
- * Created by Philip on 12-12-2014.
- */
 
 import com.company.Film;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 
 public class FilmTest {
     private Film f1;
