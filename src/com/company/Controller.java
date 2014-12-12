@@ -9,13 +9,12 @@ public class Controller {
     //private GUI gui = new GUI();
     // private Screen screen;
     private DB db = new DB();
-    private Ordere ordere = new Ordere();
     //Objekter af typen Reservation, Film og Forestilling oprettes her via metoder i ((ordere)) klassen, der har tilgang til DB.
 
-    private ArrayList<Billet> res = ordere.makeReservationer();
-    private ArrayList<Film> film = ordere.makeFilm();
-    private ArrayList<Forestilling> fore = ordere.makeForestillinger();
-    private ArrayList<Sal> sal = ordere.makeSale();
+    private ArrayList<Billet> res = makeReservationer();
+    private ArrayList<Film> film = makeFilm();
+    private ArrayList<Forestilling> fore = makeForestillinger();
+    private ArrayList<Sal> sal = makeSale();
 
     public Controller(){
 
@@ -211,4 +210,49 @@ public class Controller {
         }
     }
 
+
+    //Make metoder
+    public ArrayList<Forestilling> makeForestillinger(){
+        ArrayList<Forestilling> forestillinger = new ArrayList<Forestilling>();
+        ArrayList<ArrayList<String>> x = db.downloadForestillinger();
+
+        for(int i = 0; i < x.get(0).size(); i++){
+            forestillinger.add(new Forestilling(Integer.parseInt(x.get(0).get(i)), Integer.parseInt(x.get(1).get(i)), Integer.parseInt(x.get(2).get(i)), x.get(3).get(i), x.get(4).get(i)));
+        }
+        return forestillinger;
+    }
+
+    public ArrayList<Sal> makeSale(){
+        ArrayList<Sal> sale = new ArrayList<Sal>();
+        ArrayList<ArrayList<Integer>> x = db.downloadSal();
+
+        for(int i = 0; i < x.get(0).size(); i++){
+            sale.add(new Sal(x.get(0).get(i), x.get(1).get(i), x.get(2).get(i)));
+        }
+        return sale;
+    }
+
+
+
+    public ArrayList<Film> makeFilm(){
+        ArrayList<Film> film = new ArrayList<Film>();
+        ArrayList<ArrayList<String>> x = db.downloadFilm();
+
+        for(int i = 0; i < x.get(0).size(); i++){
+            film.add(new Film(Integer.parseInt(x.get(0).get(i)), x.get(1).get(i)));
+        }
+        return film;
+    }
+
+
+
+    public ArrayList<Billet> makeReservationer(){
+        ArrayList<Billet> billet = new ArrayList<Billet>();
+        ArrayList<ArrayList<Integer>> x = db.downloadBilletTest();
+
+        for(int i = 0; i < x.get(0).size(); i++){
+            billet.add(new Billet(x.get(0).get(i), x.get(1).get(i), x.get(2).get(i), x.get(3).get(i), x.get(4).get(i)));
+        }
+        return billet;
+    }
 }

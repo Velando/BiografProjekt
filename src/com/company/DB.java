@@ -171,5 +171,105 @@ public class DB {
         }
     }
 
-}
 
+
+
+
+    //Download metoder
+    public ArrayList<ArrayList<String>> downloadForestillinger(){
+        ArrayList<ArrayList<String>> forestillinger = new ArrayList<ArrayList<String>>();
+
+        // Først henter vi alle de arrays der skal bruges.
+        openConnection();
+        ArrayList<String> forestilling_id = sqlCommandSelectFromGetString("forstil_id","Forestilling");
+        ArrayList<String> forestilling_film_id = sqlCommandSelectFromGetString("film_id", "Forestilling");
+        ArrayList<String> forestilling_sal_nr = sqlCommandSelectFromGetString("sal_nr", "Forestilling");
+        ArrayList<String> forestilling_tid = sqlCommandSelectFromGetString("tid", "Forestilling");
+        ArrayList<String> forestilling_dag = sqlCommandSelectFromGetString("dag", "Forestilling");
+
+
+        closeConnection();
+
+
+        forestillinger.add(forestilling_id);
+        forestillinger.add(forestilling_sal_nr);
+        forestillinger.add(forestilling_film_id);
+        forestillinger.add(forestilling_tid);
+        forestillinger.add(forestilling_dag);
+
+        return forestillinger;
+    }
+
+
+    public ArrayList<ArrayList<Integer>> downloadSal(){
+        ArrayList<ArrayList<Integer>> sale = new ArrayList<ArrayList<Integer>>();
+
+        // Først henter vi alle de arrays der skal bruges.
+        openConnection();
+        ArrayList<Integer> sal_nr = sqlCommandSelectFromGetInt("sal_nr","Sal");
+        ArrayList<Integer> rækker = sqlCommandSelectFromGetInt("rækker", "Sal");
+        ArrayList<Integer> sæder = sqlCommandSelectFromGetInt("sæder", "Sal");
+
+        closeConnection();
+
+        sale.add(sal_nr);
+        sale.add(rækker);
+        sale.add(sæder);
+
+        return sale;
+    }
+
+
+    public ArrayList<ArrayList<String>> downloadFilm(){
+        ArrayList<ArrayList<String>> film = new ArrayList<ArrayList<String>>();
+
+        // Først henter vi alle de arrays der skal bruges.
+        openConnection();
+        ArrayList<String> film_id = sqlCommandSelectFromGetString("film_id", "Film");
+        ArrayList<String> navn = sqlCommandSelectFromGetString("navn", "Film");
+
+        closeConnection();
+
+        film.add(film_id);
+        film.add(navn);
+
+        return film;
+    }
+
+
+    public ArrayList<ArrayList<Integer>> downloadBilletTest(){
+        ArrayList<ArrayList<Integer>> reservationer = new ArrayList<ArrayList<Integer>>();
+
+        // Først henter vi alle de arrays der skal bruges.
+        openConnection();
+        ArrayList<Integer> forestil_id = sqlCommandSelectFromGetInt("forestil_id","Billet");
+        ArrayList<Integer> res_id = sqlCommandSelectFromGetInt("res_id","Billet");
+
+        ArrayList<Integer> res_id2 = sqlCommandSelectFromGetInt("res_id", "Reservation");
+        ArrayList<Integer> tlf_nr = sqlCommandSelectFromGetInt("tlf_nr","Reservation");
+
+        ArrayList<Integer> række = sqlCommandSelectFromGetInt("række", "Billet");
+        ArrayList<Integer> sæde = sqlCommandSelectFromGetInt("sæde_nr", "Billet");
+
+
+        closeConnection();
+
+        reservationer.add(forestil_id);
+        reservationer.add(res_id);
+
+
+        ArrayList billet_tlf_nr = new ArrayList<Integer>();
+        for(int i = 0; i < res_id.size(); i++)
+            for(int j = 0; j < res_id2.size(); j++)
+                if(res_id.get(i) == res_id2.get(j))
+                    billet_tlf_nr.add(tlf_nr.get(j));
+
+
+        reservationer.add(billet_tlf_nr);
+        reservationer.add(række);
+        reservationer.add(sæde);
+
+        return reservationer;
+    }
+
+}
