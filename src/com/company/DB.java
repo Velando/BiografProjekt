@@ -171,17 +171,6 @@ public class DB {
         }
     }
 
-    public void sqlCommandDeleteBillet(int billet_nr){
-        openConnection();
-        try {
-            String sql = "DELETE FROM Billet WHERE billet_nr =(" + billet_nr +")";
-            statement.executeUpdate(sql);
-            closeConnection();
-        } catch (Exception e){
-            e.printStackTrace(); // handle errors
-        }
-    }
-
 
 
 
@@ -192,7 +181,7 @@ public class DB {
 
         // Først henter vi alle de arrays der skal bruges.
         openConnection();
-        ArrayList<String> forestilling_id = sqlCommandSelectFromGetString("forstil_id", "Forestilling");
+        ArrayList<String> forestilling_id = sqlCommandSelectFromGetString("forstil_id","Forestilling");
         ArrayList<String> forestilling_film_id = sqlCommandSelectFromGetString("film_id", "Forestilling");
         ArrayList<String> forestilling_sal_nr = sqlCommandSelectFromGetString("sal_nr", "Forestilling");
         ArrayList<String> forestilling_tid = sqlCommandSelectFromGetString("tid", "Forestilling");
@@ -248,7 +237,7 @@ public class DB {
     }
 
 
-    public ArrayList<ArrayList<Integer>> downloadBillet(){
+    public ArrayList<ArrayList<Integer>> downloadBilletTest(){
         ArrayList<ArrayList<Integer>> reservationer = new ArrayList<ArrayList<Integer>>();
 
         // Først henter vi alle de arrays der skal bruges.
@@ -261,7 +250,6 @@ public class DB {
 
         ArrayList<Integer> række = sqlCommandSelectFromGetInt("række", "Billet");
         ArrayList<Integer> sæde = sqlCommandSelectFromGetInt("sæde_nr", "Billet");
-        ArrayList<Integer> billet_nr = sqlCommandSelectFromGetInt("billet_nr", "Billet");
 
 
         closeConnection();
@@ -280,7 +268,6 @@ public class DB {
         reservationer.add(billet_tlf_nr);
         reservationer.add(række);
         reservationer.add(sæde);
-        reservationer.add(billet_nr);
 
         return reservationer;
     }

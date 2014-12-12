@@ -15,15 +15,13 @@ public class Billet {
     private int tlf_nr;
     private int række;
     private int sæde_nr;
-    private int billet_nr;
 
-    public Billet(int forestil_id, int res_id, int tlf_nr, int række, int sæde_nr, int billet_nr){
+    public Billet(int forestil_id, int res_id, int tlf_nr, int række, int sæde_nr){
         this.forestil_id = forestil_id;
         this.res_id = res_id;
         this.tlf_nr = tlf_nr;
         this.række = række;
         this.sæde_nr = sæde_nr;
-        this.billet_nr = billet_nr;
     }
 
     public int getForestil_id(){return forestil_id;}
@@ -35,9 +33,5 @@ public class Billet {
     public int getRække(){return række;}
 
     public int getSæde_nr(){return sæde_nr;}
-
-    public int getBillet_nr(){
-        return billet_nr;
-    }
 
 }
