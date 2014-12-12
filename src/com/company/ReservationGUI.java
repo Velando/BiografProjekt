@@ -169,17 +169,11 @@ public class ReservationGUI {
     //markerede sæder.
     private void toBeReserved(int row, int seat){
         ArrayList<Integer> rowAndSeat = new ArrayList<Integer>();
-        ArrayList<Integer> billet_nr = new ArrayList<Integer>();
-
-        for(Billet b: f.getReservationer()){
-            billet_nr.add(b.getBillet_nr());
-        }
 
         rowAndSeat.add(row);
         rowAndSeat.add(seat);
 
         toBeReserved.add(rowAndSeat);
-        toBeReserved.add(billet_nr);
         System.out.println(toBeReserved);
     }
 
@@ -239,7 +233,7 @@ public class ReservationGUI {
     private int getScale() {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
-        return d.width/900;
+        return d.width/1200;
     }
 
 

@@ -60,10 +60,6 @@ public class Forestilling {
         reservationer.add(res);
     }
 
-    public ArrayList<Billet> getReservationer(){
-        return reservationer;
-    }
-
     public int getSalRækker(){
         return sal.getRækker();
     }
