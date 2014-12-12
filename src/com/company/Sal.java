@@ -19,7 +19,7 @@ public class Sal {
         this.sæder = sæder;
     }
 
-    public boolean[][] lavSæder(boolean[][] sal){ //skal udvides med reservationer
+    public boolean[][] lavSæder(boolean[][] sal){
         sal = new boolean[rækker][sæder];
 
         for(boolean[] ba: sal){
