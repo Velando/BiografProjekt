@@ -67,9 +67,6 @@ public class Forestilling {
     public int getSalSæder() {
         return sal.getSæder();
     }
-    }
-
-    
 
 
     public void lavReservationer(){
