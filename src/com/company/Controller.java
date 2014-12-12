@@ -182,10 +182,12 @@ public class Controller {
     public void newReservation(int forestil_id, int res_id, int tlf_nr, ArrayList<ArrayList<Integer>> rs){
         int række;
         int sæde;
+        int billet_nr;
         for(ArrayList<Integer> l: rs){
             række = l.get(0);
             sæde = l.get(1);
-            Billet temp = new Billet(forestil_id, res_id, tlf_nr, række, sæde);
+            billet_nr = l.get(2);
+            Billet temp = new Billet(forestil_id, res_id, tlf_nr, række, sæde, billet_nr);
             res.add(temp);
             fore.get(forestil_id).setReservationer(temp);
             init();
@@ -211,6 +213,7 @@ public class Controller {
     }
 
 
+
     //Make metoder
     public ArrayList<Forestilling> makeForestillinger(){
         ArrayList<Forestilling> forestillinger = new ArrayList<Forestilling>();
@@ -232,8 +235,6 @@ public class Controller {
         return sale;
     }
 
-
-
     public ArrayList<Film> makeFilm(){
         ArrayList<Film> film = new ArrayList<Film>();
         ArrayList<ArrayList<String>> x = db.downloadFilm();
@@ -244,14 +245,12 @@ public class Controller {
         return film;
     }
 
-
-
     public ArrayList<Billet> makeReservationer(){
         ArrayList<Billet> billet = new ArrayList<Billet>();
-        ArrayList<ArrayList<Integer>> x = db.downloadBilletTest();
+        ArrayList<ArrayList<Integer>> x = db.downloadBillet();
 
         for(int i = 0; i < x.get(0).size(); i++){
-            billet.add(new Billet(x.get(0).get(i), x.get(1).get(i), x.get(2).get(i), x.get(3).get(i), x.get(4).get(i)));
+            billet.add(new Billet(x.get(0).get(i), x.get(1).get(i), x.get(2).get(i), x.get(3).get(i), x.get(4).get(i), x.get(5).get(i)));
         }
         return billet;
     }
