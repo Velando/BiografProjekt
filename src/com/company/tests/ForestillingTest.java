@@ -39,11 +39,6 @@ public class ForestillingTest {
     }
 
     @Test
-    public void forestillingCompareObjectsTest(){
-
-    }
-
-    @Test
     public void forestillingFilmInput(){
         Film film = new Film(2,"Kagemand");
         f1.setFilm(film);
@@ -61,6 +56,18 @@ public class ForestillingTest {
         Assert.assertEquals(true,f1.getResSæder()[0][0]);
         Assert.assertNotEquals(true,f1.getResSæder()[0][1]);
         Assert.assertNotEquals(true,f1.getResSæder()[1][0]);
+    }
+
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
+    public void forestillingSal(){
+        Sal sal = new Sal(1,1,1);
+        f1.setSal(sal);
+        f1.lavReservationer();
+
+        Assert.assertEquals(false,f1.getResSæder()[0][0]);
+
+        // this one should throws an ArrayIndexOutOfBoundsExcetion.
+        Assert.assertEquals(false,f1.getResSæder()[1][0]);
     }
 
 }

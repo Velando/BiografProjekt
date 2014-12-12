@@ -250,7 +250,7 @@ public class ReservationGUI {
         frame.pack();
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(320* getScale(), 240*getScale());
+        frame.setSize(400* getScale(), 300*getScale());
         //centrerer vinduet i forhold til skærmopløsningen
         frame.setLocation(d.width/2 - frame.getWidth()/2, d.height/2 - frame.getHeight()/2);
 
