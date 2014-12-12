@@ -153,7 +153,7 @@ public class ReservationGUI {
                     });
                 }
                 JPanel flow = new JPanel();
-                btn.setFont(getFont(8));
+                btn.setFont(getFont(10));
                 flow.add(btn);
                 seatGrid.add(flow);
             }
@@ -233,7 +233,7 @@ public class ReservationGUI {
     private int getScale() {
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
-        return d.width/800;
+        return d.width/1200;
     }
 
 
@@ -250,7 +250,7 @@ public class ReservationGUI {
         frame.pack();
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(400* getScale(), 300*getScale());
+        frame.setSize(640* getScale(), 320*getScale());
         //centrerer vinduet i forhold til skærmopløsningen
         frame.setLocation(d.width/2 - frame.getWidth()/2, d.height/2 - frame.getHeight()/2);
 
