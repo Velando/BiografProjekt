@@ -45,7 +45,7 @@ public class GUI {
             westGrid.add(j);
         }
 
-        westGrid.setFont(getFont());
+        westGrid.setFont(getFont(10));
         flow.add(westGrid);
         flow.setBorder(new LineBorder(Color.BLACK));
 
@@ -71,7 +71,7 @@ public class GUI {
             final String filmTid = s.substring(s.length() - 5);
             final String filmNavn = navn;
 
-            btn.setFont(getFont());
+            btn.setFont(getFont(10));
             //hvis en knap klikkes, oprettes et nyt ReservationGUI for den givne forestilling
             btn.addActionListener(new ActionListener() {
                 @Override
@@ -138,7 +138,7 @@ public class GUI {
             final String filmTid = s.substring(s.length() - 5);
             final String filmDag = dag;
 
-            btn.setFont(getFont());
+            btn.setFont(getFont(10));
             //hvis en knap klikkes, oprettes et nyt ReservationGUI for den givne forestilling
             btn.addActionListener(new ActionListener() {
                 @Override
@@ -226,9 +226,6 @@ public class GUI {
     }
      **/
 
-    private Font getFont() {
-        return new Font("Times New Roman", Font.PLAIN, 12 * getScale());
-    }
     private Font getFont(int size) {
         Font font = new Font("Times New Roman", Font.PLAIN, size*getScale());
         return font;

@@ -30,16 +30,6 @@ public class Forestilling {
         this.film_id = film_id;
     }
 
-    public void test(){
-        System.out.println(forstil_id);
-        System.out.println(film_id);
-        System.out.println(sal_nr);
-        System.out.println(tid);
-        System.out.println(dag);
-    }
-
-
-
     public void setFilm(Film film){
         this.film = film;
     }
@@ -76,12 +66,6 @@ public class Forestilling {
 
     public int getSalSæder() {
         return sal.getSæder();
-    }
-
-
-    //useless?
-    public ArrayList<Billet> getReservationer(){
-        return reservationer;
     }
 
     public void lavReservationer(){

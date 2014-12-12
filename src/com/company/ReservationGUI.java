@@ -44,7 +44,7 @@ public class ReservationGUI {
         JLabel forestillingNavn = new JLabel(navn + " " + dagTid, SwingConstants.CENTER);
         //JLabel forestillingDagTid = new JLabel(dagTid, SwingConstants.RIGHT);
 
-        forestillingNavn.setFont(new Font("Times New Roman", Font.BOLD, 18));
+        forestillingNavn.setFont(getFont(14));
 
         reservationPane.add(forestillingNavn, BorderLayout.NORTH);
         //reservationPane.add(forestillingDagTid, BorderLayout.NORTH);
@@ -103,6 +103,9 @@ public class ReservationGUI {
             }
         });
 
+        reserve.setFont(getFont(12));
+        annuller.setFont(getFont(12));
+
         flow.add(reserve);
         flow.add(annuller);
 
@@ -150,6 +153,7 @@ public class ReservationGUI {
                     });
                 }
                 JPanel flow = new JPanel();
+                btn.setFont(getFont(8));
                 flow.add(btn);
                 seatGrid.add(flow);
             }
@@ -198,8 +202,7 @@ public class ReservationGUI {
 
     //bruges til at tjekke om den indkommende tlf. nr. kun
     //består af tal
-    private boolean isNumeric(String str)
-    {
+    private boolean isNumeric(String str){
         for (char c : str.toCharArray())
         {
             if (!Character.isDigit(c)) return false;
@@ -220,6 +223,19 @@ public class ReservationGUI {
         gui.getController().newReservation(f.getForstil_id(), Integer.parseInt(gui.getController().getDb().sqlCommandInsertInto(telefonNr, f.getForstil_id(), toBeReserved)), Integer.parseInt(telefonNr), toBeReserved);
     }
 
+    private Font getFont(int size) {
+        Font font = new Font("Times New Roman", Font.PLAIN, size*getScale());
+        return font;
+    }
+
+    //skaleringsfaktor til skriftstørrelse så der tages højde
+    //for brugerens skærmopløsning
+    private int getScale() {
+        Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+
+        return d.width/900;
+    }
+
 
     //endelig opbygning af vinduet
     public void makeFrame() {
@@ -234,7 +250,7 @@ public class ReservationGUI {
         frame.pack();
 
         Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setSize(640, 480);
+        frame.setSize(320* getScale(), 240*getScale());
         //centrerer vinduet i forhold til skærmopløsningen
         frame.setLocation(d.width/2 - frame.getWidth()/2, d.height/2 - frame.getHeight()/2);
 
