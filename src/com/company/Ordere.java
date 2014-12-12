@@ -16,7 +16,7 @@ public class Ordere {
 
     //Nedenstående metoder bliver brugt til at oprette klasser. download() henter, make() opretter (kaldes i controller).
 
-    public ArrayList<ArrayList<String>> downloadForestillingTest(){
+    public ArrayList<ArrayList<String>> downloadForestillinger(){
         ArrayList<ArrayList<String>> forestillinger = new ArrayList<ArrayList<String>>();
 
         // Først henter vi alle de arrays der skal bruges.
@@ -46,7 +46,7 @@ public class Ordere {
 
     public ArrayList<Forestilling> makeForestillinger(){
         ArrayList<Forestilling> forestillinger = new ArrayList<Forestilling>();
-        ArrayList<ArrayList<String>> x = downloadForestillingTest();
+        ArrayList<ArrayList<String>> x = downloadForestillinger();
 
         for(int i = 0; i < x.get(0).size(); i++){
             forestillinger.add(new Forestilling(Integer.parseInt(x.get(0).get(i)), Integer.parseInt(x.get(1).get(i)), Integer.parseInt(x.get(2).get(i)), x.get(3).get(i), x.get(4).get(i)));
