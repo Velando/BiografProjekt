@@ -42,7 +42,7 @@ public class Forestilling {
         }
 
         for(Billet b: toBeRemoved)
-            reservationer.remove(toBeRemoved);
+            reservationer.remove(b);
         lavReservationer();
     }
 
