@@ -65,7 +65,7 @@ public class Controller {
 
         for(Forestilling f : fore){
 
-            if(f.getFilm_id() == film_id){
+            if(f.getForstil_id() == film_id){
                 dag = f.getDag();
             }
         }
@@ -79,7 +79,7 @@ public class Controller {
 
         for(Forestilling f : fore){
 
-            if(f.getFilm_id() == film_id){
+            if(f.getForstil_id() == film_id){
                 tid = f.getTid();
             }
         }
@@ -93,7 +93,7 @@ public class Controller {
 
         for(Forestilling f : fore){
 
-            if(f.getFilm_id() == film_id){
+            if(f.getForstil_id() == film_id){
                 film = f.getFilmNavn();
             }
         }
@@ -208,6 +208,20 @@ public class Controller {
         for(Billet b : toBeRemoved) {
             res.remove(b);
         }
+
+        init();
+    }
+
+    public ArrayList<Billet> getReservation(String tlfNr) {
+
+        ArrayList<Billet> toBeReturned = new ArrayList<Billet>();
+        for(Billet billet : res) {
+
+            if(Integer.toString(billet.getTlf_nr()).equals(tlfNr)) {
+                toBeReturned.add(billet);
+            }
+        }
+        return toBeReturned;
     }
 
 

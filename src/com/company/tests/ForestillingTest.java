@@ -1,5 +1,3 @@
-package com.company.tests;
-
 
 import com.company.Forestilling;
 import com.company.Film;
@@ -52,7 +50,7 @@ public class ForestillingTest {
     public void forestillingBilletInput(){
 
         //her kan der buges mocking objecter
-        Billet billet = new Billet(1,1,10000000,1,1,1);
+        Billet billet = new Billet(1,1,10000000,1,1);
         Sal sal = new Sal(1,10,10);
 
 

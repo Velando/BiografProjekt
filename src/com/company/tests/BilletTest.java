@@ -10,7 +10,7 @@ public class BilletTest {
 
     @Before
     public void before(){
-        b1 = new Billet(1,2,3,4,5,6);
+        b1 = new Billet(1,2,3,4,5);
     }
 
     @Test
@@ -20,7 +20,7 @@ public class BilletTest {
         Assert.assertEquals(3,b1.getTlf_nr());
         Assert.assertEquals(4,b1.getRække());
         Assert.assertEquals(5,b1.getSæde_nr());
-        Assert.assertEquals(6,b1.getBillet_nr());
+        //Assert.assertEquals(6,b1.getBillet_nr());
     }
 
     @Test
@@ -30,6 +30,6 @@ public class BilletTest {
         Assert.assertNotEquals(2, b1.getTlf_nr());
         Assert.assertNotEquals(3, b1.getRække());
         Assert.assertNotEquals(3, b1.getSæde_nr());
-        Assert.assertNotEquals(3, b1.getBillet_nr());
+        //Assert.assertNotEquals(3, b1.getBillet_nr());
     }
 }
