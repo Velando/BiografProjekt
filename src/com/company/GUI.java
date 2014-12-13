@@ -19,7 +19,7 @@ public class GUI {
     private JPanel filmPane = new JPanel(new BorderLayout(6*getScale(),6*getScale()));
     private JPanel dagPane = new JPanel(new BorderLayout(6*getScale(),6*getScale()));
     private JPanel reservationPane = new JPanel(new BorderLayout(6*getScale(), 6*getScale()));
-    private JPanel reservationGrid = new JPanel(new GridLayout(0,6));
+    private JPanel reservationGrid = new JPanel(new GridLayout(0,2));
     private JPanel centerGrid = new JPanel(new GridLayout(0,3));
     private Controller controller = new Controller();
     private final GUI gui = this;
@@ -203,8 +203,8 @@ public class GUI {
 
             ArrayList<String> data = new ArrayList<String>();
 
-            data.add(dag);
             data.add(film);
+            data.add(dag);
             data.add(tid);
             data.add(række);
             data.add(sæde);
@@ -216,36 +216,40 @@ public class GUI {
     }
 
 
-    private void makeSletReservationTable(String tlfNr) {
+    private void makeSletReservationTable(final String tlfNr) {
 
         reservationGrid.removeAll();
         ArrayList<ArrayList<String>> billet = searchTlfNr(tlfNr);
+        JPanel reservationGrid_1 = new JPanel(new GridLayout(0,1));
+        JPanel reservationGrid_2 = new JPanel(new GridLayout(0,5));
 
         ArrayList<String> columnNames = new ArrayList<String>();
-        columnNames.add("Dag");
         columnNames.add("Film");
+        columnNames.add("Dag");
         columnNames.add("Tid");
         columnNames.add("Række");
         columnNames.add("Sæde");
         columnNames.add("Slet");
 
-        for(String s : columnNames) {
-            JPanel flow = new JPanel();
-            JLabel l = new JLabel(s);
-            flow.add(l);
-            reservationGrid.add(flow);
+        for(int i = 0; i < 6; i++) {
+
+            if (i == 0) {
+                reservationGrid_1.add(new JLabel(columnNames.get(i), SwingConstants.CENTER));
+            } else {
+                reservationGrid_2.add(new JLabel(columnNames.get(i), SwingConstants.CENTER));
+            }
         }
 
         for(final ArrayList<String> list : billet) {
 
+            JLabel film = new JLabel(list.get(0), SwingConstants.CENTER);
+            film.setBorder(new LineBorder(Color.BLACK));
+            reservationGrid_1.add(film);
 
-            for(String s : list) {
+            for(int i = 1; i < 5; i++) {
 
-                JPanel flow = new JPanel();
-                JLabel label = new JLabel(s);
-
-                flow.add(label);
-                reservationGrid.add(flow);
+                JLabel data = new JLabel(list.get(i), SwingConstants.CENTER);
+                reservationGrid_2.add(data);
             }
 
             JButton slet = new JButton("Slet");
@@ -253,15 +257,24 @@ public class GUI {
                 @Override
                 public void actionPerformed(ActionEvent e) {
 
-                    for(String info : list) {
-                        System.out.println(info);
-                    }
+                    System.out.println(list.get(3));
+                    System.out.println(list.get(4));
+
+                    int fore_id = controller.getForestilling(list.get(0), list.get(1), list.get(2)).getForstil_id();
+
+                    System.out.println(fore_id);
+
+                    controller.sletReservation(fore_id, list.get(3), list.get(4));
+
+                    makeSletReservationTable(tlfNr);
                 }
             });
-            reservationGrid.add(slet);
+
+            reservationGrid_2.add(slet);
         }
 
-
+        reservationGrid.add(reservationGrid_1);
+        reservationGrid.add(reservationGrid_2);
         reservationGrid.revalidate();
         reservationGrid.repaint();
         reservationPane.add(reservationGrid, BorderLayout.CENTER);

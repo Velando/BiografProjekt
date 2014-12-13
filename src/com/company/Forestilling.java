@@ -30,6 +30,21 @@ public class Forestilling {
         this.film_id = film_id;
     }
 
+    public void updateBilletter(int række, int sæde) {
+
+        Billet toBeRemoved = null;
+
+        for(Billet billet : reservationer) {
+
+            if (billet.getRække() == række && billet.getSæde_nr() == sæde){
+                toBeRemoved = billet;
+            }
+        }
+
+        reservationer.remove(toBeRemoved);
+        lavReservationer();
+    }
+
     public void setFilm(Film film){
         this.film = film;
     }

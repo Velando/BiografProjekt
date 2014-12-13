@@ -171,6 +171,18 @@ public class DB {
         }
     }
 
+    public void sqlCommandDeleteReservation(int fore_id, String række, String sæde){
+        openConnection();
+        try {
+            String sql = "DELETE FROM Billet WHERE forestil_id =(" + fore_id +") AND række =(" + række + ") AND sæde_nr =(" + sæde + ")";
+            statement.executeUpdate(sql);
+            closeConnection();
+
+        } catch (Exception e){
+            e.printStackTrace(); // handle errors
+        }
+    }
+
 
 
 

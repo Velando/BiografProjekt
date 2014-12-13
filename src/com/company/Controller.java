@@ -207,10 +207,33 @@ public class Controller {
 
         for(Billet b : toBeRemoved) {
             res.remove(b);
+        };
+    }
+
+    public void sletReservation(int fore_id, String række, String sæde) {
+
+        db.sqlCommandDeleteReservation(fore_id, række, sæde);
+        Billet toBeRemoved = null;
+
+        for(Billet billet : res) {
+
+            if(billet.getForestil_id() == fore_id && Integer.toString(billet.getRække()).equals(række) && Integer.toString(billet.getSæde_nr()).equals(sæde)) {
+                toBeRemoved = billet;
+            }
         }
+
+        for(Forestilling f : fore) {
+
+            if(f.getForstil_id() == fore_id) {
+                f.updateBilletter(Integer.parseInt(række), Integer.parseInt(sæde));
+            }
+        }
+        res.remove(toBeRemoved);
 
         init();
     }
+
+    //public void sletReservation(String film, String dag, String tid,)
 
     public ArrayList<Billet> getReservation(String tlfNr) {
 
