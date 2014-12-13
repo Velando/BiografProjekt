@@ -42,7 +42,7 @@ public class Forestilling {
         }
 
         for(Billet b: toBeRemoved)
-            reservationer.remove(b);
+            reservationer.remove(toBeRemoved);
         lavReservationer();
     }
 
@@ -74,6 +74,10 @@ public class Forestilling {
 
     public void setReservationer(Billet res){
         reservationer.add(res);
+    }
+
+    public ArrayList<Billet> getReservationer(){
+        return reservationer;
     }
 
     public int getSalRækker(){

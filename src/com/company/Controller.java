@@ -205,9 +205,25 @@ public class Controller {
             }
         }
 
+        ArrayList<Billet> sletBillet = new ArrayList<Billet>();
+        for(Forestilling f: fore) {
+            for (Billet b : f.getReservationer()) {
+                if (b.getTlf_nr() == Integer.parseInt(tlfNr)) {
+                    sletBillet.add(b);
+                }
+            }
+            for(Billet b: sletBillet) {
+                f.getReservationer().remove(b);
+            }
+            f.lavReservationer();
+        }
+
+
+
         for(Billet b : toBeRemoved) {
             res.remove(b);
-        };
+        }
+        //init();
     }
 
     public void sletReservation(int fore_id, String række, String sæde) {
