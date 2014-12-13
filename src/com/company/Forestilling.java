@@ -32,16 +32,17 @@ public class Forestilling {
 
     public void updateBilletter(int række, int sæde) {
 
-        Billet toBeRemoved = null;
+        ArrayList<Billet> toBeRemoved = new ArrayList<Billet>();
 
         for(Billet billet : reservationer) {
 
             if (billet.getRække() == række && billet.getSæde_nr() == sæde){
-                toBeRemoved = billet;
+                toBeRemoved.add(billet);
             }
         }
 
-        reservationer.remove(toBeRemoved);
+        for(Billet b: toBeRemoved)
+            reservationer.remove(b);
         lavReservationer();
     }
 

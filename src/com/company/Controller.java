@@ -213,12 +213,12 @@ public class Controller {
     public void sletReservation(int fore_id, String række, String sæde) {
 
         db.sqlCommandDeleteReservation(fore_id, række, sæde);
-        Billet toBeRemoved = null;
+        ArrayList<Billet> toBeRemoved = new ArrayList<Billet>();
 
         for(Billet billet : res) {
 
             if(billet.getForestil_id() == fore_id && Integer.toString(billet.getRække()).equals(række) && Integer.toString(billet.getSæde_nr()).equals(sæde)) {
-                toBeRemoved = billet;
+                toBeRemoved.add(billet);
             }
         }
 
@@ -228,9 +228,9 @@ public class Controller {
                 f.updateBilletter(Integer.parseInt(række), Integer.parseInt(sæde));
             }
         }
-        res.remove(toBeRemoved);
+        for(Billet b: toBeRemoved)
+            res.remove(b);
 
-        init();
     }
 
     //public void sletReservation(String film, String dag, String tid,)
