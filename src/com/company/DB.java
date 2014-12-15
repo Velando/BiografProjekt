@@ -24,32 +24,30 @@ public class DB {
     public DB() {
     }
 
-    public void openConnection(){
+    //Åbner connection til DB
+    private void openConnection(){
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver()); // Register driver
             connection = DriverManager.getConnection(DB_URL, USER, PASS); // Open connection
             statement = connection.createStatement(); // Create statement
-
-            // System.out.println("Connected");
 
         } catch (Exception e) {
             e.printStackTrace(); // handle errors
         }
     }
 
-    public void closeConnection(){
+    //Lukker connection til DB
+    private void closeConnection(){
         try {
             connection.close(); // close connection
-
-            //System.out.println("Connection closed");
 
         }catch (Exception e){
             e.printStackTrace(); // handle errors
         }
-
     }
 
-    public ArrayList<Integer> sqlCommandSelectFromGetInt(String select,String from) {
+    //Executer en Select statement på DB - returnerer int
+    private ArrayList<Integer> sqlCommandSelectFromGetInt(String select,String from) {
         ArrayList<Integer> listToBeReturned = new ArrayList<Integer>();
         try {
             String sql = "SELECT * FROM " + from;
@@ -68,7 +66,8 @@ public class DB {
         return listToBeReturned;
     }
 
-    public ArrayList<Integer> sqlCommandSelectFromGetInt(String select,String from,String where) {
+    //Executer en Select statement på DB
+    private ArrayList<Integer> sqlCommandSelectFromGetInt(String select,String from,String where) {
         ArrayList<Integer> listToBeReturned = new ArrayList<Integer>();
         try {
             String sql = "SELECT * FROM " + from + " WHERE (" + where + ")";
@@ -87,7 +86,8 @@ public class DB {
         return listToBeReturned;
     }
 
-    public ArrayList<String> sqlCommandSelectFromGetString(String select,String from) {
+    //Executer SELECT statement på DB - returnerer String
+    private ArrayList<String> sqlCommandSelectFromGetString(String select,String from) {
         ArrayList<String> listToBeReturned = new ArrayList<String>();
         try {
             String sql = "SELECT * FROM " + from;
@@ -106,7 +106,8 @@ public class DB {
         return listToBeReturned;
     }
 
-    public ArrayList<String> sqlCommandSelectFromGetString(String select,String from, String where) {
+    //Executer SELECT statement på DB - returnerer String
+    private ArrayList<String> sqlCommandSelectFromGetString(String select,String from, String where) {
         ArrayList<String> listToBeReturned = new ArrayList<String>();
         try {
             String sql = "SELECT " +select +" FROM " + from + " WHERE (" + where + ")";
@@ -125,6 +126,8 @@ public class DB {
         return listToBeReturned;
     }
 
+    //Executer INSERT INTO statement på DB - bruges til nye reservationer (Billet)
+    //Returnerer et reservations id som String, som bruges til at relationer.
     public String sqlCommandInsertInto(String v1, int v2, ArrayList<ArrayList<Integer>> v3){
         String res_id = "";
         openConnection();
@@ -159,6 +162,8 @@ public class DB {
         return res_id;
     }
 
+    //Executer DELETE statement på DB.
+    //Bruges til at slette reservationer i DB (Reservation)
     public void sqlCommandDeleteReservation(String tlf_nr){
         openConnection();
         try {
@@ -171,6 +176,8 @@ public class DB {
         }
     }
 
+    //Executer SELECT statement på DB.
+    //Bruges til at slette reservationer (Billet).
     public void sqlCommandDeleteReservation(int fore_id, String række, String sæde){
         openConnection();
         try {
@@ -188,6 +195,7 @@ public class DB {
 
 
     //Download metoder
+    //Henter data fra DB til at oprette objekter i Controller.
     public ArrayList<ArrayList<String>> downloadForestillinger(){
         ArrayList<ArrayList<String>> forestillinger = new ArrayList<ArrayList<String>>();
 

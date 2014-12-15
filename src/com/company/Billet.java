@@ -4,11 +4,10 @@ package com.company;
  * Created by Philip on 09-12-2014.
  */
 
-    //Bruges pt til at gemme række og sæde nr i forbindelse med Billet table i DB, som videre bliver brugt til
-    //boolean[][] array i Forestilling, som skal tage vare på reservationer der er relevante for den pågældende
-    //forestilling.
-    //udivddelse: reservations_id og/eller telefonnummer, så vi kan tilgå reservationer via dem - bl.a. til
-    //opdatering / rettelser i DB.
+    //Bruges til at gemme række og sæde nr i forbindelse med Billet table i DB (og tlf nr fra Reservation),
+    //som videre bliver brugt til boolean[][] array i Forestilling, som skal tage vare på reservationer
+    //der er relevante for den pågældende forestilling.
+
 public class Billet {
     private int forestil_id;
     private int res_id;

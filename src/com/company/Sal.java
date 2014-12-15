@@ -4,14 +4,13 @@ package com.company;
  * Created by Philip on 09-12-2014.
  */
 
-    //Klassen bruges lige nu kun i minimalt. Bruges til at gemme sal nr (som ikke bruges pt), samt antal sæder og
-    // rækker der bruges i forbindelse med boolean[][] array i Forestilling, der har relevans for reservationer.
-    //
+    //Klassen bruges til at gemme sal nr, samt antal sæder og rækker, der bruges i forbindelse
+    // med boolean[][] array i Forestilling, der har relevans for reservationer.
+
 public class Sal {
     private int sal_nr;
     private int rækker;
     private int sæder;
-     // arraylists i stedet?
 
     public Sal(int sal_nr, int rækker, int sæder){
         this.sal_nr = sal_nr;
@@ -19,6 +18,7 @@ public class Sal {
         this.sæder = sæder;
     }
 
+    //Sætter alle til false som udgangspunkt (ingen reserverede sæder). Udfyldes med reservationer andetsteds.
     public boolean[][] lavSæder(boolean[][] sal){
         sal = new boolean[rækker][sæder];
 
@@ -31,7 +31,7 @@ public class Sal {
     }
 
 
-
+    //accessor metoder
     public int getSal_nr(){
         return sal_nr;
     }

@@ -3,7 +3,7 @@ package com.company;
 /**
  * Created by Philip on 09-12-2014.
  */
-    //Bruges kun til at knytte film objekt til forestilling, så den kan få film navn.
+    //Bruges til at knytte film objekt til forestilling, så den kan få film navn.
 public class Film {
     private int film_id;
     private String film_navn;
