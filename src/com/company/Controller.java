@@ -7,7 +7,6 @@ import java.util.ArrayList;
  */
 public class Controller {
     //private GUI gui = new GUI();
-    // private Screen screen;
     private DB db = new DB();
     //Objekter af typen Reservation, Film og Forestilling oprettes her via metoder i ((ordere)) klassen, der har tilgang til DB.
 
@@ -17,16 +16,6 @@ public class Controller {
     private ArrayList<Sal> sal = makeSale();
 
     public Controller(){
-
-        // setupScreen();
-        //tjekBillet("27289200");
-        // tjekFilmList();
-        //tjekForestillinger();
-        // tjekReservationer();
-        //tjekSeats(1);
-        //testDownloadForestillingSpecifikdag();
-        //test2();
-        //tjekgetForesitillingerTilBestemtFilm();
         init();
     }
 
@@ -65,7 +54,7 @@ public class Controller {
 
         for(Forestilling f : fore){
 
-            if(f.getFilm_id() == film_id){
+            if(f.getForstil_id() == film_id){
                 dag = f.getDag();
             }
         }
@@ -79,7 +68,7 @@ public class Controller {
 
         for(Forestilling f : fore){
 
-            if(f.getFilm_id() == film_id){
+            if(f.getForstil_id() == film_id){
                 tid = f.getTid();
             }
         }
@@ -93,7 +82,7 @@ public class Controller {
 
         for(Forestilling f : fore){
 
-            if(f.getFilm_id() == film_id){
+            if(f.getForstil_id() == film_id){
                 film = f.getFilmNavn();
             }
         }
@@ -136,7 +125,7 @@ public class Controller {
 
 
 
-    //*****NY METODE DER ORDNER KLASSE HALLØJET - INITIALISERE EN MASSE OBJEKTER OG MATCHER DEM*******
+    //*****NY METODE DER ORDNER KLASSE HALLØJET - INITIALISERER EN MASSE OBJEKTER OG MATCHER DEM*******
 
 
 
@@ -161,7 +150,8 @@ public class Controller {
                 if (re.getForestil_id() == fo.getForstil_id())
                     fo.setReservationer(re);
 
-
+        //Sal nummer sammenligned for alle forestilling- og sal-objekter, så de kan relateres.
+        //Størrelse på kan nu tilgås af given forestilling.
         for (Forestilling fo : fore) {
             for (Sal s : sal) {
                 if (fo.getSal_nr() == s.getSal_nr())
@@ -192,6 +182,7 @@ public class Controller {
         }
     }
 
+    //Sletter alle reservationer ud fra et tlfNr
     public void sletReservationer(String tlfNr) {
 
         ArrayList<Billet> toBeRemoved = new ArrayList<Billet>();
@@ -205,14 +196,68 @@ public class Controller {
             }
         }
 
+        ArrayList<Billet> sletBillet = new ArrayList<Billet>();
+        for(Forestilling f: fore) {
+            for (Billet b : f.getReservationer()) {
+                if (b.getTlf_nr() == Integer.parseInt(tlfNr)) {
+                    sletBillet.add(b);
+                }
+            }
+            for(Billet b: sletBillet) {
+                f.getReservationer().remove(b);
+            }
+            f.lavReservationer();
+        }
+
+
+
         for(Billet b : toBeRemoved) {
             res.remove(b);
         }
     }
 
 
-    //Make metoder
-    public ArrayList<Forestilling> makeForestillinger(){
+    //Sletter en enkelt reservation ud fra forestillings id, række- og sædenr
+    public void sletReservation(int fore_id, String række, String sæde) {
+
+        db.sqlCommandDeleteReservation(fore_id, række, sæde);
+        ArrayList<Billet> toBeRemoved = new ArrayList<Billet>();
+
+        for(Billet billet : res) {
+
+            if(billet.getForestil_id() == fore_id && Integer.toString(billet.getRække()).equals(række) && Integer.toString(billet.getSæde_nr()).equals(sæde)) {
+                toBeRemoved.add(billet);
+            }
+        }
+
+        for(Forestilling f : fore) {
+
+            if(f.getForstil_id() == fore_id) {
+                f.updateBilletter(Integer.parseInt(række), Integer.parseInt(sæde));
+            }
+        }
+        for(Billet b: toBeRemoved)
+            res.remove(b);
+
+    }
+
+    //public void sletReservation(String film, String dag, String tid,)
+
+    public ArrayList<Billet> getReservation(String tlfNr) {
+
+        ArrayList<Billet> toBeReturned = new ArrayList<Billet>();
+        for(Billet billet : res) {
+
+            if(Integer.toString(billet.getTlf_nr()).equals(tlfNr)) {
+                toBeReturned.add(billet);
+            }
+        }
+        return toBeReturned;
+    }
+
+
+    //Make metoder - henter data fra DB og opretter objekter. Disse sættes ind i ArrayLists.
+    private ArrayList<Forestilling> makeForestillinger(){
         ArrayList<Forestilling> forestillinger = new ArrayList<Forestilling>();
         ArrayList<ArrayList<String>> x = db.downloadForestillinger();
 
@@ -222,7 +267,7 @@ public class Controller {
         return forestillinger;
     }
 
-    public ArrayList<Sal> makeSale(){
+    private ArrayList<Sal> makeSale(){
         ArrayList<Sal> sale = new ArrayList<Sal>();
         ArrayList<ArrayList<Integer>> x = db.downloadSal();
 
@@ -233,8 +278,7 @@ public class Controller {
     }
 
 
-
-    public ArrayList<Film> makeFilm(){
+    private ArrayList<Film> makeFilm(){
         ArrayList<Film> film = new ArrayList<Film>();
         ArrayList<ArrayList<String>> x = db.downloadFilm();
 
@@ -245,8 +289,7 @@ public class Controller {
     }
 
 
-
-    public ArrayList<Billet> makeReservationer(){
+    private ArrayList<Billet> makeReservationer(){
         ArrayList<Billet> billet = new ArrayList<Billet>();
         ArrayList<ArrayList<Integer>> x = db.downloadBilletTest();
 

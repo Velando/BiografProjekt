@@ -17,6 +17,7 @@ public class GUI {
     private JPanel filmPane = new JPanel(new BorderLayout(6*getScale(),6*getScale()));
     private JPanel dagPane = new JPanel(new BorderLayout(6*getScale(),6*getScale()));
     private JPanel reservationPane = new JPanel(new BorderLayout(6*getScale(), 6*getScale()));
+    private JPanel reservationGrid = new JPanel(new GridLayout(0,2));
     private JPanel centerGrid = new JPanel(new GridLayout(0,3));
     private Controller controller = new Controller();
     private final GUI gui = this;
@@ -156,6 +157,8 @@ public class GUI {
 
     private void makeSletReservationNorth() {
 
+        JPanel northGrid = new JPanel(new GridLayout(2,1));
+
         JPanel northFlow = new JPanel(new FlowLayout(FlowLayout.CENTER));
         final JTextField tlfNrInput = new JTextField(8);
         JLabel indtastTlfNr = new JLabel("Indtast Telefonnummer");
@@ -164,20 +167,71 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String tlfNr = tlfNrInput.getText();
+                if (tlfNr == null || tlfNr.length() != 8 || !isNumeric(tlfNr)) {
+                    JOptionPane.showMessageDialog(frame, "Telefonnummeret skal bestå af præcist 8 tal");
+                } else {
+                    makeSletReservationTable(tlfNr);
+                }
+            }
+        });
 
-                controller.sletReservationer(tlfNr);
+        JPanel northLabels = new JPanel(new GridLayout(1,2));
+        JPanel northGridLabels_1 = new JPanel(new GridLayout(1,1));
+        JPanel northGridLabels_2 = new JPanel(new GridLayout(1,5));
+
+        ArrayList<String> columnNames = new ArrayList<String>();
+        columnNames.add("Film");
+        columnNames.add("Dag");
+        columnNames.add("Tid");
+        columnNames.add("Række");
+        columnNames.add("Sæde");
+        columnNames.add("Slet");
+
+        for(int i = 0; i < 6; i++) {
+
+            if (i == 0) {
+                northGridLabels_1.add(new JLabel(columnNames.get(i), SwingConstants.CENTER));
+            } else {
+                northGridLabels_2.add(new JLabel(columnNames.get(i), SwingConstants.CENTER));
+            }
+        }
+
+        northLabels.add(northGridLabels_1);
+        northLabels.add(northGridLabels_2);
+
+        JButton sletAlle = new JButton("Slet Alle");
+        sletAlle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String tlfNr = tlfNrInput.getText();
+                if (tlfNr == null || tlfNr.length() != 8 || !isNumeric(tlfNr)) {
+                    JOptionPane.showMessageDialog(frame, "Indtast et telefonnummer");
+                } else {
+
+                    if (JOptionPane.showConfirmDialog(null, "Slet alle?", "Bekræft",
+                            JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                        controller.sletReservationer(tlfNr);
+                        makeSletReservationTable(tlfNr);
+                    } else {
+                        //gør intet
+                    }
+                }
             }
         });
 
         northFlow.add(indtastTlfNr);
         northFlow.add(tlfNrInput);
         northFlow.add(search);
-        reservationPane.add(northFlow, BorderLayout.NORTH);
+        northFlow.add(sletAlle);
+        northGrid.add(northFlow);
+        northGrid.add(northLabels);
+        reservationPane.add(northGrid, BorderLayout.NORTH);
     }
 
-    /**
-    private ArrayList<Object> searchTlfNr(String tlfNr){
+    private ArrayList<ArrayList<String>> searchTlfNr(String tlfNr){
+
         ArrayList<Billet> billetList = controller.getReservation(tlfNr);
+        ArrayList<ArrayList<String>> toBeReturned = new ArrayList<ArrayList<String>>();
 
         for(Billet billet : billetList) {
             int forestillingId = billet.getForestil_id();
@@ -185,46 +239,67 @@ public class GUI {
             String dag = controller.getForestillingsDag(forestillingId);
             String tid = controller.getForestillingsTid(forestillingId);
             String film = controller.getForestillingsNavn(forestillingId);
-            Integer række = billet.getRække();
-            Integer sæde = billet.getSæde_nr();
+            String række = Integer.toString(billet.getRække());
+            String sæde = Integer.toString(billet.getSæde_nr());
 
-            ArrayList<Object> info = new ArrayList<Object>();
-            info.add(film);
-            info.add(dag);
-            info.add(tid);
-            info.add(række);
-            info.add(sæde);
+            ArrayList<String> data = new ArrayList<String>();
+
+            data.add(film);
+            data.add(dag);
+            data.add(tid);
+            data.add(række);
+            data.add(sæde);
+
+            toBeReturned.add(data);
         }
 
-        return null;
+        return toBeReturned;
     }
 
 
-    private void makeSletReservationTable() {
+    private void makeSletReservationTable(final String tlfNr) {
 
-        String[] columnNames = {"Film",
-                "Dag",
-                "Tid",
-                "Række",
-                "Sæde",
-                "Slet Reservation"};
+        reservationGrid.removeAll();
+        ArrayList<ArrayList<String>> billet = searchTlfNr(tlfNr);
+        JPanel reservationGrid_1 = new JPanel(new GridLayout(0,1));
+        JPanel reservationGrid_2 = new JPanel(new GridLayout(0,5));
 
-        Object[][] billet = new Object[1][6];
-        billet[0][0] = "hej";
-        billet[0][1] = "mandag";
-        billet[0][2] = "21:30";
-        billet[0][3] = "2";
-        billet[0][4] = "3";
-        billet[0][5] = new JButton("Slet");
+        for(final ArrayList<String> list : billet) {
 
-        JTable table = new JTable(billet, columnNames);
-        table.setFillsViewportHeight(true);
+            JLabel film = new JLabel(list.get(0), SwingConstants.CENTER);
+            film.setBorder(new LineBorder(Color.BLACK));
+            reservationGrid_1.add(film);
 
-        JScrollPane scrollPane = new JScrollPane(table);
+            for(int i = 1; i < 5; i++) {
 
-        reservationPane.add(scrollPane);
+                JLabel data = new JLabel(list.get(i), SwingConstants.CENTER);
+                reservationGrid_2.add(data);
+            }
+
+            JButton slet = new JButton("Slet");
+            slet.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                    int fore_id = controller.getForestilling(list.get(0), list.get(1), list.get(2)).getForstil_id();
+
+                    controller.sletReservation(fore_id, list.get(3), list.get(4));
+
+                    makeSletReservationTable(tlfNr);
+                }
+            });
+
+            reservationGrid_2.add(slet);
+        }
+
+        reservationGrid.add(reservationGrid_1);
+        reservationGrid.add(reservationGrid_2);
+        reservationGrid.revalidate();
+        reservationGrid.repaint();
+        reservationPane.add(reservationGrid, BorderLayout.CENTER);
+        reservationPane.revalidate();
+        reservationPane.repaint();
     }
-     **/
 
     private Font getFont(int size) {
         Font font = new Font("Times New Roman", Font.PLAIN, size*getScale());
@@ -241,6 +316,16 @@ public class GUI {
 
     public Controller getController() {
         return controller;
+    }
+
+    //bruges til at tjekke om den indkommende tlf. nr. kun
+    //består af tal
+    public boolean isNumeric(String str){
+        for (char c : str.toCharArray())
+        {
+            if (!Character.isDigit(c)) return false;
+        }
+        return true;
     }
 
     private void makeFrame(){

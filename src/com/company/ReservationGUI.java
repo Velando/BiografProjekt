@@ -81,7 +81,7 @@ public class ReservationGUI {
 
                 //Tjekker input for at bestå af netop 8 tal (dansk telefonnummer)
                 if(dialogInput != null) {
-                    if (dialogInput.length() != 8 || !isNumeric(dialogInput)) {
+                    if (dialogInput.length() != 8 || !gui.isNumeric(dialogInput)) {
                         JOptionPane.showMessageDialog(frame, "Telefonnummeret skal bestå af præcist 8 tal");
                     } else {
                         //input er tjekket, bekræft reservationer
@@ -200,18 +200,7 @@ public class ReservationGUI {
         System.out.println(toBeReserved);
     }
 
-    //bruges til at tjekke om den indkommende tlf. nr. kun
-    //består af tal
-    private boolean isNumeric(String str){
-        for (char c : str.toCharArray())
-        {
-            if (!Character.isDigit(c)) return false;
-        }
-        return true;
-    }
-
     //meget, meget grim løsning DansGame
-    //
     public void makeReservation(String telefonNr) {
         System.out.println(telefonNr);
         System.out.println(toBeReserved);
