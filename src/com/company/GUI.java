@@ -7,9 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-/**
- * Created by Jonas on 03-12-2014.
- */
 public class GUI {
     private JFrame frame = new JFrame("Biograf GUI");
     private JPanel contentPane = (JPanel) frame.getContentPane();

@@ -2,9 +2,6 @@ package com.company;
 
 import java.util.ArrayList;
 
-/**
- * Created by Philip on 09-12-2014.
- */
 
     //Forestilling klassen har den alt vi skal bruge omkring forestillingerne til at
     //kunne få et GUI op at køre.

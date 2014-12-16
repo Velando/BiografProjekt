@@ -4,9 +4,6 @@ import java.sql.*; // Import required packages
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Sebastian on 26-11-2014.
- */
 public class DB {
     // JDBC driver name and database URL
     private final String JDBC_DRIVER = "com.mysql.jdbc.Driver";

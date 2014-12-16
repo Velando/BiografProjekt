@@ -2,13 +2,10 @@ package com.company;
 
 import java.util.ArrayList;
 
-/**
- * Created by Sebastian on 26-11-2014.
- */
 public class Controller {
-    //private GUI gui = new GUI();
     private DB db = new DB();
-    //Objekter af typen Reservation, Film og Forestilling oprettes her via metoder i ((ordere)) klassen, der har tilgang til DB.
+    private GUI gui;
+    //Objekter af typen Reservation, Film og Forestilling oprettes her via diverse make..() metoder, der har tilgang til DB.
 
     private ArrayList<Billet> res = makeReservationer();
     private ArrayList<Film> film = makeFilm();
@@ -17,6 +14,11 @@ public class Controller {
 
     public Controller(){
         init();
+    }
+
+    public void start(){
+        //kører makeFrame() i GUI;
+        gui = new GUI();
     }
 
     //Hent en forestillings visningsdag og -tidspunkt ud fra filmtitel

@@ -1,8 +1,5 @@
 package com.company;
 
-/**
- * Created by Philip on 09-12-2014.
- */
 
     //Bruges til at gemme række og sæde nr i forbindelse med Billet table i DB (og tlf nr fra Reservation),
     //som videre bliver brugt til boolean[][] array i Forestilling, som skal tage vare på reservationer

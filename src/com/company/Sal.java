@@ -1,8 +1,5 @@
 package com.company;
 
-/**
- * Created by Philip on 09-12-2014.
- */
 
     //Klassen bruges til at gemme sal nr, samt antal sæder og rækker, der bruges i forbindelse
     // med boolean[][] array i Forestilling, der har relevans for reservationer.

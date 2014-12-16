@@ -6,10 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-/**
- * Created by Jonas on 07-12-2014.
- */
 public class ReservationGUI {
 
     private JFrame frame = new JFrame("Reservation");
