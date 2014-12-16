@@ -1,7 +1,5 @@
 package com.company;
 
-import com.mysql.jdbc.StringUtils;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;

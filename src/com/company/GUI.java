@@ -19,8 +19,9 @@ public class GUI {
     private JPanel reservationPane = new JPanel(new BorderLayout(6*getScale(), 6*getScale()));
     private JPanel reservationGrid = new JPanel(new GridLayout(0,2));
     private JPanel centerGrid = new JPanel(new GridLayout(0,3));
-    private Controller controller = new Controller();
+    private JPanel northLabel = new JPanel();
     private final GUI gui = this;
+    private Controller controller = new Controller();
 
     public GUI() {makeFrame();}
 
@@ -28,7 +29,6 @@ public class GUI {
     private void makeFilmWest(){
         JPanel flow = new JPanel();
         JPanel westGrid = new JPanel(new GridLayout(0,1));
-
 
         //henter arraylist med filmnavne
         ArrayList<String> l = controller.getFilms();
@@ -57,6 +57,13 @@ public class GUI {
     private void getForestillingerTilFilm(String navn){
         //henter forestillinger til hver film
         ArrayList<String> l = controller.getForestillingFilm(navn);
+
+        //viser navnet på filmen der er sorteret efter
+        northLabel.removeAll();
+        JLabel filmLabel = new JLabel("Forestillinger for " + navn, SwingConstants.CENTER);
+        filmLabel.setFont(getFont(14 * getScale()));
+        northLabel.add(filmLabel);
+        filmPane.add(northLabel, BorderLayout.NORTH);
 
         //først rydes det nuværende grid så der kan fyldes nyt i
         centerGrid.removeAll();
@@ -128,6 +135,14 @@ public class GUI {
         //henter dagens forestillinger med filmnavn og visningstid
         ArrayList<String> l = controller.getForestillingDag(dag);
 
+        //viser dagen der er sorteret efter
+        northLabel.removeAll();
+        JLabel dagLabel = new JLabel("Forestillinger for " + dag, SwingConstants.CENTER);
+        dagLabel.setFont(getFont(14*getScale()));
+        northLabel.add(dagLabel);
+        dagPane.add(northLabel, BorderLayout.NORTH);
+
+        //først rydes det nuværende grid så der kan fyldes nyt i
         centerGrid.removeAll();
 
         for (String s : l) {
@@ -212,9 +227,8 @@ public class GUI {
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         controller.sletReservationer(tlfNr);
                         makeSletReservationTable(tlfNr);
-                    } else {
-                        //gør intet
                     }
+                    //ellers gøres intet og dialogen lukkes
                 }
             }
         });
@@ -332,9 +346,9 @@ public class GUI {
 
         //lidt luft i kanterne
         filmPane.setBorder(new EmptyBorder(12*getScale(), 12*getScale(), 12*getScale(), 12*getScale()));
-        filmPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
+        //filmPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
         dagPane.setBorder(new EmptyBorder(12*getScale(), 12*getScale(), 12*getScale(), 12*getScale()));
-        dagPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
+        //dagPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
 
         //bygger film tabben
         makeFilmWest();
