@@ -40,12 +40,9 @@ public class ReservationGUI {
         String navn = forestillingNavn;
 
         JLabel forestillingNavn = new JLabel(navn + " " + dagTid, SwingConstants.CENTER);
-        //JLabel forestillingDagTid = new JLabel(dagTid, SwingConstants.RIGHT);
-
-        forestillingNavn.setFont(getFont(14));
+        forestillingNavn.setFont(getFont(18));
 
         reservationPane.add(forestillingNavn, BorderLayout.NORTH);
-        //reservationPane.add(forestillingDagTid, BorderLayout.NORTH);
     }
 
     //knapper, reservér og annullér, i bunden af vinduet

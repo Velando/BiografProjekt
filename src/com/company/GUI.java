@@ -167,6 +167,10 @@ public class GUI {
         dagPane.repaint();
     }
 
+    //laver et tekstfelt, en søgeknap og en slet alle knap i toppen af vinduet.
+    //Tekstfeltet tager et bruger input på 8 tal og søg knappen giver
+    //så en liste af alle billetter der står i det nummer.
+    //Slet alle knappen sletter all billetterne.
     private void buildSletReservationNorth() {
 
         JPanel northGrid = new JPanel(new GridLayout(2,1));
@@ -191,6 +195,8 @@ public class GUI {
         JPanel northGridLabels_1 = new JPanel(new GridLayout(1,1));
         JPanel northGridLabels_2 = new JPanel(new GridLayout(1,5));
 
+        //de forskellige kolonne navne lægges i en liste så der kan oprettes
+        //et label med hvert af dem
         ArrayList<String> columnNames = new ArrayList<String>();
         columnNames.add("Film");
         columnNames.add("Dag");
@@ -211,6 +217,8 @@ public class GUI {
         northLabels.add(northGridLabels_1);
         northLabels.add(northGridLabels_2);
 
+        //slet alle knappen oprettes. Der gives en bekræftelses dialog hvis når
+        //trykkes på den
         JButton sletAlle = new JButton("Slet Alle");
         sletAlle.addActionListener(new ActionListener() {
             @Override
@@ -230,6 +238,7 @@ public class GUI {
             }
         });
 
+        //knapper og labels tilføjes øverst i vinduet
         northFlow.add(indtastTlfNr);
         northFlow.add(tlfNrInput);
         northFlow.add(search);
@@ -239,6 +248,10 @@ public class GUI {
         reservationPane.add(northGrid, BorderLayout.NORTH);
     }
 
+    //metoden finder billetter der passer til et telefonnummer. Den kigger
+    //controllerens liste af billetter igennem og finder dem der er
+    //registreret i det givne telefonnummer. Billeterne  hentes ud og
+    //lægges som strings i en ArrayList, som så returneres.
     private ArrayList<ArrayList<String>> searchTlfNr(String tlfNr){
 
         ArrayList<Billet> billetList = controller.getReservation(tlfNr);
@@ -267,7 +280,10 @@ public class GUI {
         return toBeReturned;
     }
 
-
+    //metoden der køres når der trykkes på søg knappen.
+    //Der sørges for, ved brug af nested layouts, at kolonnen med filmnavne
+    //har mest plads på skærmen. I slutningen af hver række indsættes in Slet knap,
+    //der står for at slette billetten den er tilknyttet.
     private void buildSletReservationTable(final String tlfNr) {
 
         reservationGrid.removeAll();
@@ -340,7 +356,6 @@ public class GUI {
     }
 
     private void makeFrame(){
-
         //lidt luft i kanterne
         filmPane.setBorder(new EmptyBorder(12*getScale(), 12*getScale(), 12*getScale(), 12*getScale()));
         //filmPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
