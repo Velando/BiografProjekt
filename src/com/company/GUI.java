@@ -19,16 +19,16 @@ public class GUI {
     private JPanel reservationPane = new JPanel(new BorderLayout(6*getScale(), 6*getScale()));
     private JPanel reservationGrid = new JPanel(new GridLayout(0,2));
     private JPanel centerGrid = new JPanel(new GridLayout(0,3));
-    private Controller controller = new Controller();
+    private JPanel northLabel = new JPanel();
     private final GUI gui = this;
+    private Controller controller = new Controller();
 
     public GUI() {makeFrame();}
 
     //bygger venstre side af filmtabben
-    private void makeFilmWest(){
+    private void buildFilmWest(){
         JPanel flow = new JPanel();
         JPanel westGrid = new JPanel(new GridLayout(0,1));
-
 
         //henter arraylist med filmnavne
         ArrayList<String> l = controller.getFilms();
@@ -57,6 +57,13 @@ public class GUI {
     private void getForestillingerTilFilm(String navn){
         //henter forestillinger til hver film
         ArrayList<String> l = controller.getForestillingFilm(navn);
+
+        //viser navnet på filmen der er sorteret efter
+        northLabel.removeAll();
+        JLabel filmLabel = new JLabel("Forestillinger for " + navn, SwingConstants.CENTER);
+        filmLabel.setFont(getFont(14 * getScale()));
+        northLabel.add(filmLabel);
+        filmPane.add(northLabel, BorderLayout.NORTH);
 
         //først rydes det nuværende grid så der kan fyldes nyt i
         centerGrid.removeAll();
@@ -92,7 +99,7 @@ public class GUI {
     //fylder dagtabbens venstre side af vinduet med knapper svarende
     //til hver dag i ugen. Hver knap opdaterer centergriddet med passende
     //forestilling hvis der klikkes på dem
-    private void makeDagWest() {
+    private void buildDagWest() {
         JPanel westGrid = new JPanel(new GridLayout(0,1));
 
         ArrayList<String> dage = new ArrayList<String>();
@@ -128,6 +135,14 @@ public class GUI {
         //henter dagens forestillinger med filmnavn og visningstid
         ArrayList<String> l = controller.getForestillingDag(dag);
 
+        //viser dagen der er sorteret efter
+        northLabel.removeAll();
+        JLabel dagLabel = new JLabel("Forestillinger for " + dag, SwingConstants.CENTER);
+        dagLabel.setFont(getFont(14*getScale()));
+        northLabel.add(dagLabel);
+        dagPane.add(northLabel, BorderLayout.NORTH);
+
+        //først rydes det nuværende grid så der kan fyldes nyt i
         centerGrid.removeAll();
 
         for (String s : l) {
@@ -155,7 +170,7 @@ public class GUI {
         dagPane.repaint();
     }
 
-    private void makeSletReservationNorth() {
+    private void buildSletReservationNorth() {
 
         JPanel northGrid = new JPanel(new GridLayout(2,1));
 
@@ -170,7 +185,7 @@ public class GUI {
                 if (tlfNr == null || tlfNr.length() != 8 || !isNumeric(tlfNr)) {
                     JOptionPane.showMessageDialog(frame, "Telefonnummeret skal bestå af præcist 8 tal");
                 } else {
-                    makeSletReservationTable(tlfNr);
+                    buildSletReservationTable(tlfNr);
                 }
             }
         });
@@ -211,10 +226,9 @@ public class GUI {
                     if (JOptionPane.showConfirmDialog(null, "Slet alle?", "Bekræft",
                             JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                         controller.sletReservationer(tlfNr);
-                        makeSletReservationTable(tlfNr);
-                    } else {
-                        //gør intet
+                        buildSletReservationTable(tlfNr);
                     }
+                    //ellers gøres intet og dialogen lukkes
                 }
             }
         });
@@ -257,7 +271,7 @@ public class GUI {
     }
 
 
-    private void makeSletReservationTable(final String tlfNr) {
+    private void buildSletReservationTable(final String tlfNr) {
 
         reservationGrid.removeAll();
         ArrayList<ArrayList<String>> billet = searchTlfNr(tlfNr);
@@ -285,7 +299,7 @@ public class GUI {
 
                     controller.sletReservation(fore_id, list.get(3), list.get(4));
 
-                    makeSletReservationTable(tlfNr);
+                    buildSletReservationTable(tlfNr);
                 }
             });
 
@@ -332,19 +346,19 @@ public class GUI {
 
         //lidt luft i kanterne
         filmPane.setBorder(new EmptyBorder(12*getScale(), 12*getScale(), 12*getScale(), 12*getScale()));
-        filmPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
+        //filmPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
         dagPane.setBorder(new EmptyBorder(12*getScale(), 12*getScale(), 12*getScale(), 12*getScale()));
-        dagPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
+        //dagPane.setLayout(new BorderLayout(6*getScale(), 6*getScale()));
 
         //bygger film tabben
-        makeFilmWest();
+        buildFilmWest();
 
         //bygger dag tabben
-        makeDagWest();
+        buildDagWest();
 
         //bygger sletReservation tabben
-        makeSletReservationNorth();
-        //makeSletReservationTable();
+        buildSletReservationNorth();
+        //buildSletReservationTable();
 
         //samler det hele
         tabbedPane.addTab("Film", filmPane);
