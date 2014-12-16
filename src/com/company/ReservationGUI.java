@@ -18,6 +18,8 @@ public class ReservationGUI {
     private String forestillingNavn;
     private String forestillingTid;
     private String forestillingDag;
+    private int sæderTotal;
+    private int ledigeSæder;
     private ArrayList<ArrayList<Integer>> toBeReserved = new ArrayList<ArrayList<Integer>>();
     private Forestilling f;
     private GUI gui;
@@ -28,6 +30,8 @@ public class ReservationGUI {
         forestillingNavn = f.getFilmNavn();
         forestillingTid = f.getTid();
         forestillingDag = f.getDag();
+        sæderTotal = f.getSalRækker()*f.getSalSæder();
+        ledigeSæder = sæderTotal;
         this.f = f;
         this.gui = parent;
         makeFrame();
@@ -101,6 +105,11 @@ public class ReservationGUI {
             }
         });
 
+        JPanel ledigeFlow = new JPanel();
+        JLabel ledige = new JLabel("Ledige sæder: " + Integer.toString(ledigeSæder) + "/" + Integer.toString(sæderTotal));
+        ledige.setFont(getFont(18));
+        ledigeFlow.add(ledige);
+
         reserve.setFont(getFont(12));
         annuller.setFont(getFont(12));
 
@@ -108,6 +117,7 @@ public class ReservationGUI {
         flow.add(annuller);
 
         border.add(flow, BorderLayout.EAST);
+        border.add(ledigeFlow, BorderLayout.WEST);
 
         reservationPane.add(border, BorderLayout.SOUTH);
     }
@@ -135,6 +145,8 @@ public class ReservationGUI {
 
                 if(f.getResSæder()[i-1][j-1]) {
                     btn.setBackground(Color.RED);
+                    //sædet er reserveret, træk 1 fra antallet af ledige sæder
+                    ledigeSæder--;
                 } else {
                     btn.setBackground(Color.GREEN);
                     btn.addActionListener(new ActionListener() {
@@ -204,10 +216,11 @@ public class ReservationGUI {
         System.out.println(toBeReserved);
         System.out.println(f.getForstil_id());
 
-        //udkommenteret metode køres som argument i den anden (returnerer res_id som string, lidt rodet). Der gemmes
-        //reserveres derfor dobbelt hvis begge kaldes.
-        //gui.getController().getDb().sqlCommandInsertInto(telefonNr, f.getForstil_id(), toBeReserved);
-        gui.getController().newReservation(f.getForstil_id(), Integer.parseInt(gui.getController().getDb().sqlCommandInsertInto(telefonNr, f.getForstil_id(), toBeReserved)), Integer.parseInt(telefonNr), toBeReserved);
+        //først tilføjes reservationerne til databasen gennem db's INSERT INTO metode, og et
+        //unikt reservations id returneres
+        int res_id = Integer.parseInt(gui.getController().getDb().sqlCommandInsertInto(telefonNr, f.getForstil_id(), toBeReserved));
+        //hvorefter controlleren tilføjer de nye reservationer til dens lister
+        gui.getController().newReservation(f.getForstil_id(), res_id , Integer.parseInt(telefonNr), toBeReserved);
     }
 
     private Font getFont(int size) {
